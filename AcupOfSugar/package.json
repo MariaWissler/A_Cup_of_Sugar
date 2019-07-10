@@ -1,0 +1,42 @@
+{
+  "name": "acupofsugar",
+  "version": "1.0.0",
+  "description": "Capstone Project , Food Sharing App ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MariaWissler/A_Cup_of_Sugar.git"
+  },
+  "keywords": [
+    "Capstone",
+    "Food",
+    "Sharing",
+    "App",
+    "Ada"
+  ],
+  "author": "Maria Wissler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MariaWissler/A_Cup_of_Sugar/issues"
+  },
+  "homepage": "https://github.com/MariaWissler/A_Cup_of_Sugar#readme",
+  "dependencies": {
+    "@types/body-parser": "^1.17.0",
+    "@types/cookie-parser": "^1.4.1",
+    "@types/express": "^4.17.0",
+    "@types/helmet": "0.0.43",
+    "@types/morgan": "^1.7.35",
+    "@types/uuid": "^3.4.5",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^3.18.0",
+    "mongoose": "^5.6.4",
+    "morgan": "^1.9.1",
+    "uuid": "^3.3.2"
+  }
+}
