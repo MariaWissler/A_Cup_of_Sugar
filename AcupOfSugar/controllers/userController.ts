@@ -1,43 +1,61 @@
-import userTable from "../models/users";
+import UserModel from "../models/users";
 
 export class UserController{
 
-   public createUser(request, response){
-       var userName = request.body.userName;
-       var name = request.body.name;
-       var email = request.body.email;
-
-      if(userName == null || userName == ""){
-        return response.status(422).send('Username cant be empty');
-      }
-
-      if(name == null || name == ""){
-        return response.status(422).send('User Name cant be empty');
-      }
-
-      if(email == null || email == ""){
-        return response.status(422).send('User Email cant be empty');
-      }
-      // crear un nuevo Objeto 
-      var newUser = new userTable({
-          userName,
-          name,
-          email
-      });
+   static async createUser(request, response){
+       const { userName, name, email } = request.body;
       
-      //new user is object
-      newUser.save((error, newUser)=>{
-        if(error){
-            response.status(500).send('Unable to create user');
-        }
-        response.status(200).json({newUser});
+      if (!userName || !email || !name) {
+          return response.status(422).send({
+              message: 'Please provide email, username & name'
+          })
+      }
+
+      const newUser = new UserModel({
+          userName,
+          email,
+          name
       });
+
+      await newUser.save();
+      
+      response.send({
+          userName: newUser.userName,
+          email: newUser.email,
+          name: newUser.name,
+          id: newUser.id
+        });
+    //   if(userName == null || userName == ""){
+    //     return response.status(422).send('Username cant be empty');
+    //   }
+
+    //   if(name == null || name == ""){
+    //     return response.status(422).send('User Name cant be empty');
+    //   }
+
+    //   if(email == null || email == ""){
+    //     return response.status(422).send('User Email cant be empty');
+    //   }
+    //   // crear un nuevo Objeto 
+    //   var newUser = new UserModel({
+    //       userName,
+    //       name,
+    //       email
+    //   });
+      
+    //   //new user is object
+    //   newUser.save((error, newUser)=>{
+    //     if(error){
+    //         response.status(500).send('Unable to create user');
+    //     }
+    //     response.status(200).json({newUser});
+    //   });
 
       }
    
 
-    public getUsers(request, response){
-        userTable.find((error, users) => {
+    static getUsers(request, response){
+        UserModel.find((error, users) => {
             if(error){
                 response.status(500).send('Users not Found');
             }
@@ -45,9 +63,9 @@ export class UserController{
         });
     }
 
-    public getUserById(request, response){
+    static getUserById(request, response){
         var userId = request.params.id;
-        userTable.findById(userId,(error, user)=> {
+        UserModel.findById(userId,(error, user)=> {
         if(error){
             response.status(500).send('Unable to find Id');
         }
@@ -55,10 +73,10 @@ export class UserController{
         });
    }
    
-   public updateUser(request, response){
+   static updateUser(request, response){
         var userId = request.params.id;
 
-        userTable.findByIdAndUpdate(userId, request.body,(error, user)=>{
+        UserModel.findByIdAndUpdate(userId, request.body,(error, user)=>{
             if(error){
                 response.status(500).json('Unable to Update User Info');
             }
@@ -66,10 +84,10 @@ export class UserController{
         });
    }
 
-   public removeUser(request, response){
+   static removeUser(request, response){
     var userId = request.params.id;
 
-    userTable.findByIdAndRemove(userId,(error, userToRemove)=>{
+    UserModel.findByIdAndRemove(userId,(error, userToRemove)=>{
         if(error){
             response.status(500).json('Unable to Remove User');
         }

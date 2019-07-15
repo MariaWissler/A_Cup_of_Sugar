@@ -1,35 +1,38 @@
-import productTable from "../models/products";
+import ProductModel from "../models/products";
 
-export class ProductsController{
+export class ProductController{
 
-    public createProduct(request, response){
-        var addressId = request.body.addressId;
-        var productName = request.body.productName;
-        var productDescription = request.body.productDescription;
-        var productImage = request.body.productImage;
-        var availability = request.body.availability;
+  static async createProduct(request, response){
+        // var addressId = request.body.addressId;
+        // var productName = request.body.productName;
+        // var productDescription = request.body.productDescription;
+        // var productImage = request.body.productImage;
+        // var availability = request.body.availability;
        // 422 client error 
-       if(addressId == null || addressId == ""){
-         return response.status(422).send('Address cant be empty');
-       }
+      //  if(addressId == null || addressId == ""){
+      //    return response.status(422).send('Address cant be empty');
+      //  }
+      //  if(productName == null || productName == ""){
+      //    return response.status(422).send('Product Name cant be empty');
+      //  }
+      //  if(productDescription== null || productDescription == ""){
+      //    return response.status(422).send('Product Description cant be empty');
+      //  }
+      //  if(productImage == null){ // string, how to validate an image ? 
+      //   return response.status(422).send('We need an image to show to other users');
+      // }
+      //  if(availability == null){ // string, how to validate an image ? 
+      //   return response.status(422).send('Product needs to be available');
+      // }
+      const {addressId, productName, productDescription, productImage, availability} = request.body
+      
+      if(!addressId || !productName || !productDescription || !productImage || !availability) {
+        return response.status(422).send({
+            message: 'Please provide complete product details'
+        })
+    }
  
-       if(productName == null || productName == ""){
-         return response.status(422).send('Product Name cant be empty');
-       }
- 
-       if(productDescription== null || productDescription == ""){
-         return response.status(422).send('Product Description cant be empty');
-       }
-
-       if(productImage== null || productImage == ""){ // string, how to validate an image ? 
-        return response.status(422).send('We need an image to show to other users');
-      }
-
-       if(availability == false){ // string, how to validate an image ? 
-        return response.status(422).send('Product needs to be available');
-      }
- 
-       var newProduct = new productTable({
+       const newProduct = new ProductModel({
            addressId,
            productName,
            productDescription,
@@ -37,17 +40,27 @@ export class ProductsController{
            availability
        });
 
-       newProduct.save((error, newProduct)=>{
-        if(error){
-            response.status(500).send('Unable to create Product');
-        }
-        response.status(200).json({newProduct});
-      });
-
-      }
+       await newProduct.save();
       
-    public getProducts(request, response){
-        productTable.find((error, products) => {
+       response.send({
+        addressId : newProduct.addressId,
+        productName: newProduct,
+        productDescription: newProduct.productDescription,
+        productImage: newProduct.productImage,
+        availability: newProduct.availability
+       });
+
+      //  newProduct.save((error, newProduct)=>{
+      //   if(error){
+      //       response.status(500).send('Unable to create Product');
+      //   }
+      //   response.status(200).json({newProduct});
+      // });
+
+       }
+
+    static getProducts(request, response){
+        ProductModel.find((error, products) => {
             if(error){
                 response.status(500).send('Product not Found');
             }
@@ -55,9 +68,9 @@ export class ProductsController{
         });
     }
 
-    public getProductById(request, response){
+    static getProductById(request, response){
         var productId = request.params.id;
-        productTable.findById(productId,(error, product)=> {
+        ProductModel.findById(productId,(error, product)=> {
         if(error){
             response.status(500).send('Unable to find Product');
         }
@@ -65,10 +78,10 @@ export class ProductsController{
         });
    }
    
-   public updateProduct(request, response){
+   static updateProduct(request, response){
         var productId = request.params.id;
 
-        productTable.findByIdAndUpdate(productId, request.body,(error, product)=>{
+        ProductModel.findByIdAndUpdate(productId, request.body,(error, product)=>{
             if(error){
                 response.status(500).json('Unable to Update Product Info');
             }
@@ -76,10 +89,10 @@ export class ProductsController{
         });
    }
 
-   public removeProduct(request, response){
+   static removeProduct(request, response){
     var productId = request.params.id;
 
-    productTable.findByIdAndRemove(productId,(error, productToRemove)=>{
+    ProductModel.findByIdAndRemove(productId,(error, productToRemove)=>{
         if(error){
             response.status(500).json('Unable to Remove User');
         }
