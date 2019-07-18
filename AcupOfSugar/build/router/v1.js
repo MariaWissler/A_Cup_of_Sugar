@@ -8,10 +8,10 @@ var productCollectionController_1 = require("../controllers/productCollectionCon
 var userRatingController_1 = require("../controllers/userRatingController");
 // app es parametro 
 exports.default = (function (app) {
-    var addressController = new addressController_1.AddressController();
-    var productController = new productController_1.ProductController();
-    var productCollectionController = new productCollectionController_1.ProductCollectionController();
-    var userRatingController = new userRatingController_1.UserRatingController();
+    // let addressController = new AddressController();
+    // let productController = new ProductController();
+    // let productCollectionController =  new ProductCollectionController();
+    // let userRatingController = new UserRatingController();
     var apiRoutes = express.Router();
     var userRouter = express.Router();
     var addressRouter = express.Router();
@@ -19,10 +19,10 @@ exports.default = (function (app) {
     var productCollectedRouter = express.Router();
     var userRateRouter = express.Router();
     apiRoutes.use("/users", userRouter);
-    apiRoutes.use("/address", addressRouter);
-    apiRoutes.use("/product", productRouter);
-    apiRoutes.use("/productcollected", productCollectedRouter);
-    apiRoutes.use("/userrate", userRateRouter);
+    apiRoutes.use("/addresses", addressRouter);
+    apiRoutes.use("/products", productRouter);
+    apiRoutes.use("/productscollected", productCollectedRouter);
+    apiRoutes.use("/userratings", userRateRouter);
     //Define routes for users
     userRouter.get('/', userController_1.UserController.getUsers);
     userRouter.get('/:id', userController_1.UserController.getUserById);
@@ -30,29 +30,29 @@ exports.default = (function (app) {
     userRouter.put('/:id', userController_1.UserController.updateUser);
     userRouter.delete('/:id', userController_1.UserController.removeUser);
     //Define routes for address
-    addressRouter.get('/', addressController.getAddress);
-    addressRouter.get('/:id', addressController.getAddressById);
-    addressRouter.post('/', addressController.createAddress);
-    addressRouter.put('/:id', addressController.updateAddress);
-    addressRouter.delete('/:id', addressController.removeAddress);
+    addressRouter.get('/', addressController_1.AddressController.getAddress);
+    addressRouter.get('/:id', addressController_1.AddressController.getAddressById);
+    addressRouter.post('/', addressController_1.AddressController.createAddress);
+    addressRouter.put('/:id', addressController_1.AddressController.updateAddress);
+    addressRouter.delete('/:id', addressController_1.AddressController.removeAddress);
     //Define routes for product
-    productRouter.get('/', productController.getProducts);
-    productRouter.get('/:id', productController.getProductById);
-    productRouter.post('/', productController.createProduct);
-    productRouter.put('/:id', productController.updateProduct);
-    productRouter.delete('/:id', productController.removeProduct);
+    productRouter.get('/', productController_1.ProductController.getProducts);
+    productRouter.get('/:id', productController_1.ProductController.getProductById);
+    productRouter.post('/', productController_1.ProductController.createProduct);
+    productRouter.put('/:id', productController_1.ProductController.updateProduct);
+    productRouter.delete('/:id', productController_1.ProductController.removeProduct);
     //Define routes for Collected Products
-    productCollectedRouter.get('/', productCollectionController.getCollectedProducts);
-    productCollectedRouter.get('/:id', productCollectionController.getCollectedProductById);
-    productCollectedRouter.post('/', productCollectionController.createProductCollected);
-    productCollectedRouter.put('/:id', productCollectionController.updateCollectedProduct);
-    productCollectedRouter.delete('/:id', productCollectionController.removeCollectedProduct);
+    productCollectedRouter.get('/', productCollectionController_1.ProductCollectionController.getCollectedProducts);
+    productCollectedRouter.get('/:id', productCollectionController_1.ProductCollectionController.getCollectedProductById);
+    productCollectedRouter.post('/', productCollectionController_1.ProductCollectionController.createProductCollected);
+    productCollectedRouter.put('/:id', productCollectionController_1.ProductCollectionController.updateCollectedProduct);
+    productCollectedRouter.delete('/:id', productCollectionController_1.ProductCollectionController.removeCollectedProduct);
     //Define routes for Rating
-    userRateRouter.get('/', userRatingController.getRatings);
-    userRateRouter.get('/:id', userRatingController.getRatingById);
-    userRateRouter.post('/', userRatingController.createRating);
-    userRateRouter.put('/:id', userRatingController.updateRating);
-    userRateRouter.delete('/:id', userRatingController.removeRating);
+    userRateRouter.get('/', userRatingController_1.UserRatingController.getRatings);
+    userRateRouter.get('/:id', userRatingController_1.UserRatingController.getRatingById);
+    userRateRouter.post('/', userRatingController_1.UserRatingController.createRating);
+    userRateRouter.put('/:id', userRatingController_1.UserRatingController.updateRating);
+    userRateRouter.delete('/:id', userRatingController_1.UserRatingController.removeRating);
     // Colleccion de Rutas 
     app.use('/api', apiRoutes);
 });

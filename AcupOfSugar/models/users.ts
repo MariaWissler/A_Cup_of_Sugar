@@ -1,30 +1,19 @@
 import * as mongoose from "mongoose";
 import * as uuid from "uuid";
+import { prop, Typegoose, ModelType, InstanceType } from "typegoose";
 
-const Schema = mongoose.Schema;
-
-const usersSchema = new Schema ({
-   id: {
-      type:String, 
-      default: function createGuid(){
-         return uuid.v1();
-       }
-      }, 
-   userName: {
-      type:String, 
-      default:"", 
-      required:true
-   },
-   name:  {
-      type:String,
-       default:"", 
-       required:true 
-      },
-   email: {
-      type:String, 
-      default:"", 
-      required:true
+export class Users extends Typegoose{
+   @prop({unique:true,default:uuid.v1()})
+   _id:String;
+   @prop({required:true})
+   userName:String;
+   
+   @prop({required:true})
+   name:String;
+   
+   @prop({required:true})
+   email:String;
    }
-});
+   const UserModel = new Users().getModelForClass(Users);
 
-export default mongoose.model("Users", usersSchema);
+   export default UserModel;

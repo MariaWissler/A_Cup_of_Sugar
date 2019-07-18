@@ -45,15 +45,21 @@ export class UserRatingController {
     });
 
     //new user is object
+    try {
+      await newRating.save();
 
-    await newRating.save();
-
-    response.send({
-      userOwnerId: newRating.userOwnerId,
-      userRequesterId: newRating.userRequesterId,
-      productRequestedId: newRating.productRequestedId,
-      rating: newRating.rating
-    });
+      response.send({
+        userOwnerId: newRating.userOwnerId,
+        userRequesterId: newRating.userRequesterId,
+        productRequestedId: newRating.productRequestedId,
+        rating: newRating.rating
+      });
+    } catch (error) {
+      console.log(error.message);
+      response.status(500).send({
+        message: "Server ecountered an error. Please try again"
+      });
+    }
   }
 
   static getRatings(request, response) {
@@ -79,7 +85,7 @@ export class UserRatingController {
   static updateRating(request, response) {
     var ratingId = request.params.id;
 
-    ratingModel.findByIdAndUpdate(ratingId, request.body, (error, rating) => {
+    RatingModel.findByIdAndUpdate(ratingId, request.body, (error, rating) => {
       if (error) {
         response.status(500).json("Unable to Update Rating");
       }

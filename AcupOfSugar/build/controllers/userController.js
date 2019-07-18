@@ -41,14 +41,14 @@ var UserController = /** @class */ (function () {
     }
     UserController.createUser = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, userName, name, email, newUser;
+            var _a, userName, name, email, newUser, error_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         _a = request.body, userName = _a.userName, name = _a.name, email = _a.email;
                         if (!userName || !email || !name) {
-                            return [2 /*return*/, response.status(400).send({
-                                    message: 'Please provide email, username & name'
+                            return [2 /*return*/, response.status(422).send({
+                                    message: "Please provide email, username & name"
                                 })];
                         }
                         newUser = new users_1.default({
@@ -56,8 +56,11 @@ var UserController = /** @class */ (function () {
                             email: email,
                             name: name
                         });
-                        return [4 /*yield*/, newUser.save()];
+                        _b.label = 1;
                     case 1:
+                        _b.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, newUser.save()];
+                    case 2:
                         _b.sent();
                         response.send({
                             userName: newUser.userName,
@@ -65,7 +68,15 @@ var UserController = /** @class */ (function () {
                             name: newUser.name,
                             id: newUser.id
                         });
-                        return [2 /*return*/];
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_1 = _b.sent();
+                        console.log(error_1.message);
+                        response.status(500).send({
+                            message: 'Server ecountered an error. Please try again'
+                        });
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -73,7 +84,7 @@ var UserController = /** @class */ (function () {
     UserController.getUsers = function (request, response) {
         users_1.default.find(function (error, users) {
             if (error) {
-                response.status(500).send('Users not Found');
+                response.status(500).send("Users not Found");
             }
             response.status(200).json({ users: users });
         });
@@ -82,16 +93,16 @@ var UserController = /** @class */ (function () {
         var userId = request.params.id;
         users_1.default.findById(userId, function (error, user) {
             if (error) {
-                response.status(500).send('Unable to find Id');
+                return response.status(500).send("Unable to find Id");
             }
-            response.status(200).json({ user: user });
+            return response.status(200).json({ user: user });
         });
     };
     UserController.updateUser = function (request, response) {
         var userId = request.params.id;
         users_1.default.findByIdAndUpdate(userId, request.body, function (error, user) {
             if (error) {
-                response.status(500).json('Unable to Update User Info');
+                return response.status(500).json("Unable to Update User Info");
             }
             response.status(200).json({ user: user });
         });
@@ -100,8 +111,11 @@ var UserController = /** @class */ (function () {
         var userId = request.params.id;
         users_1.default.findByIdAndRemove(userId, function (error, userToRemove) {
             if (error) {
-                response.status(500).json('Unable to Remove User');
+                return response.status(500).json({
+                    message: "Unable to Remove User"
+                });
             }
+            console.log('I will not run after error ');
             response.status(200).json({ userToRemove: userToRemove });
         });
     };

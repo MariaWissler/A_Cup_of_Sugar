@@ -40,7 +40,7 @@ export class AddressController{ // to do check how to import the google maps add
       //   return response.status(422).send('Country cant be empty');
       // }
        // crear un nuevo Objeto 
-       const {userId, street, streetNumber, aptNumber, city, zipCode, state, country} = request.body
+       const {userId, street, streetNumber, aptNumber, city, zipCode, state, country} = request.body;
        
        if (!userId || !street || !streetNumber || !city || !zipCode || !state || !country){
         return response.status(422).send({
@@ -59,6 +59,7 @@ export class AddressController{ // to do check how to import the google maps add
            country
        });
 
+       try {
        await newAddress.save();
 
        response.send({
@@ -72,6 +73,12 @@ export class AddressController{ // to do check how to import the google maps add
         country: newAddress.country
        });
 
+       } catch (error) {
+        console.log(error.message);
+        response.status(500).send({
+          message: 'Server ecountered an error. Please try again'
+        })
+      }
 
        
       //  //new user is object
@@ -84,8 +91,8 @@ export class AddressController{ // to do check how to import the google maps add
  
        }
 
-    public getAddress(request, response){
-        addressTable.find((error, addresses) => {
+    static getAddress(request, response){
+      AddressModel.find((error, addresses) => {
             if(error){
                 response.status(500).send('Address not Found');
             }
@@ -93,7 +100,7 @@ export class AddressController{ // to do check how to import the google maps add
         });
     }
 
-    public getAddressById(request, response){
+    static getAddressById(request, response){
         var addressId = request.params.id;
         AddressModel.findById(addressId,(error, address)=> {
         if(error){
@@ -103,7 +110,7 @@ export class AddressController{ // to do check how to import the google maps add
         });
    }
    
-   public updateAddress(request, response){
+   static updateAddress(request, response){
         var addressId = request.params.id;
 
         AddressModel.findByIdAndUpdate(addressId, request.body,(error, address)=>{
@@ -114,7 +121,7 @@ export class AddressController{ // to do check how to import the google maps add
         });
    }
 
-   public removeAddress(request, response){
+   static removeAddress(request, response){
     var addressId  = request.params.id;
 
     AddressModel.findByIdAndRemove(addressId,(error, addressToRemove)=>{

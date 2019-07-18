@@ -24,7 +24,7 @@ export class ProductController{
       //  if(availability == null){ // string, how to validate an image ? 
       //   return response.status(422).send('Product needs to be available');
       // }
-      const {addressId, productName, productDescription, productImage, availability} = request.body
+      const {addressId, productName, productDescription, productImage, availability} = request.body;
       
       if(!addressId || !productName || !productDescription || !productImage || !availability) {
         return response.status(422).send({
@@ -40,6 +40,7 @@ export class ProductController{
            availability
        });
 
+       try {
        await newProduct.save();
       
        response.send({
@@ -49,6 +50,13 @@ export class ProductController{
         productImage: newProduct.productImage,
         availability: newProduct.availability
        });
+
+       } catch (error) {
+        console.log(error.message);
+        response.status(500).send({
+          message: 'Server ecountered an error. Please try again'
+        })
+      }
 
       //  newProduct.save((error, newProduct)=>{
       //   if(error){
