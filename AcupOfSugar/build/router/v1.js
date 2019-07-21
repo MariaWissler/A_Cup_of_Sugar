@@ -5,7 +5,7 @@ var userController_1 = require("../controllers/userController");
 var addressController_1 = require("../controllers/addressController");
 var productController_1 = require("../controllers/productController");
 var productCollectionController_1 = require("../controllers/productCollectionController");
-var userRatingController_1 = require("../controllers/userRatingController");
+var userRatingsController_1 = require("../controllers/userRatingsController");
 // app es parametro 
 exports.default = (function (app) {
     // let addressController = new AddressController();
@@ -42,17 +42,17 @@ exports.default = (function (app) {
     productRouter.put('/:id', productController_1.ProductController.updateProduct);
     productRouter.delete('/:id', productController_1.ProductController.removeProduct);
     //Define routes for Collected Products
-    productCollectedRouter.get('/', productCollectionController_1.ProductCollectionController.getCollectedProducts);
-    productCollectedRouter.get('/:id', productCollectionController_1.ProductCollectionController.getCollectedProductById);
-    productCollectedRouter.post('/', productCollectionController_1.ProductCollectionController.createProductCollected);
-    productCollectedRouter.put('/:id', productCollectionController_1.ProductCollectionController.updateCollectedProduct);
-    productCollectedRouter.delete('/:id', productCollectionController_1.ProductCollectionController.removeCollectedProduct);
+    productCollectedRouter.get('/', productCollectionController_1.CollectedProductsController.getCollectedProducts);
+    productCollectedRouter.get('/:id', productCollectionController_1.CollectedProductsController.getCollectedProductById);
+    productCollectedRouter.post('/', productCollectionController_1.CollectedProductsController.createCollectedProduct);
+    productCollectedRouter.put('/:id', productCollectionController_1.CollectedProductsController.updateCollectedProduct);
+    productCollectedRouter.delete('/:id', productCollectionController_1.CollectedProductsController.removeCollectedProduct);
     //Define routes for Rating
-    userRateRouter.get('/', userRatingController_1.UserRatingController.getRatings);
-    userRateRouter.get('/:id', userRatingController_1.UserRatingController.getRatingById);
-    userRateRouter.post('/', userRatingController_1.UserRatingController.createRating);
-    userRateRouter.put('/:id', userRatingController_1.UserRatingController.updateRating);
-    userRateRouter.delete('/:id', userRatingController_1.UserRatingController.removeRating);
+    userRateRouter.get('/', userRatingsController_1.UserRatingsController.getRatings);
+    userRateRouter.get('/:id', userRatingsController_1.UserRatingsController.getRatingById);
+    userRateRouter.post('/', userRatingsController_1.UserRatingsController.createRating);
+    userRateRouter.put('/:id', userRatingsController_1.UserRatingsController.updateRating);
+    userRateRouter.delete('/:id', userRatingsController_1.UserRatingsController.removeRating);
     // Colleccion de Rutas 
     app.use('/api', apiRoutes);
 });

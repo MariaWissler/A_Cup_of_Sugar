@@ -24,38 +24,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var uuid = require("uuid");
 var typegoose_1 = require("typegoose");
-var Products = /** @class */ (function (_super) {
-    __extends(Products, _super);
-    function Products() {
+var UserRatings = /** @class */ (function (_super) {
+    __extends(UserRatings, _super);
+    function UserRatings() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     __decorate([
         typegoose_1.prop({ unique: true, default: uuid.v1() }),
         __metadata("design:type", String)
-    ], Products.prototype, "_id", void 0);
+    ], UserRatings.prototype, "_id", void 0);
     __decorate([
         typegoose_1.prop({ required: true }),
         __metadata("design:type", String)
-    ], Products.prototype, "_addressId", void 0);
+    ], UserRatings.prototype, "userOwnerId", void 0);
     __decorate([
         typegoose_1.prop({ required: true }),
         __metadata("design:type", String)
-    ], Products.prototype, "name", void 0);
+    ], UserRatings.prototype, "userRequesterId", void 0);
     __decorate([
         typegoose_1.prop({ required: true }),
         __metadata("design:type", String)
-    ], Products.prototype, "description", void 0);
+    ], UserRatings.prototype, "productRequestedId", void 0);
     __decorate([
-        typegoose_1.prop({ required: true }),
-        __metadata("design:type", Boolean)
-    ], Products.prototype, "availability", void 0);
-    __decorate([
-        typegoose_1.prop({ required: true }),
-        __metadata("design:type", Uint8Array)
-    ], Products.prototype, "image", void 0);
-    return Products;
+        typegoose_1.prop({ default: 0 }),
+        __metadata("design:type", Number)
+    ], UserRatings.prototype, "rating", void 0);
+    return UserRatings;
 }(typegoose_1.Typegoose));
-exports.Products = Products;
-var ProductModel = new Products().getModelForClass(Products);
-exports.default = ProductModel;
-//# sourceMappingURL=products.js.map
+exports.UserRatings = UserRatings;
+var UserRatingsModel = new UserRatings().getModelForClass(UserRatings);
+exports.default = UserRatingsModel;
+//# sourceMappingURL=usersRatings.js.map

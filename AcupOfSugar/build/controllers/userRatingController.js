@@ -35,11 +35,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var usersrating_1 = require("../models/usersrating");
-var UserRatingController = /** @class */ (function () {
-    function UserRatingController() {
+var usersRatings_1 = require("../models/usersRatings");
+var UserRatingsController = /** @class */ (function () {
+    function UserRatingsController() {
     }
-    UserRatingController.createRating = function (request, response) {
+    UserRatingsController.createRating = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
             var _a, userOwnerId, userRequesterId, productRequestedId, rating, newRating, error_1;
             return __generator(this, function (_b) {
@@ -51,12 +51,11 @@ var UserRatingController = /** @class */ (function () {
                                     message: "Users information and rating ins required"
                                 })];
                         }
-                        newRating = new usersrating_1.default({
-                            userOwnerId: userOwnerId,
-                            userRequesterId: userRequesterId,
-                            productRequestedId: productRequestedId,
-                            rating: rating
-                        });
+                        newRating = new usersRatings_1.default();
+                        newRating.userOwnerId = userOwnerId;
+                        newRating.userRequesterId = userRequesterId;
+                        newRating.productRequestedId = productRequestedId;
+                        newRating.rating = rating;
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 3, , 4]);
@@ -82,42 +81,42 @@ var UserRatingController = /** @class */ (function () {
             });
         });
     };
-    UserRatingController.getRatings = function (request, response) {
-        usersrating_1.default.find(function (error, ratings) {
+    UserRatingsController.getRatings = function (request, response) {
+        usersRatings_1.default.find(function (error, ratings) {
             if (error) {
                 response.status(500).send("Ratings not Found");
             }
             response.json(ratings);
         });
     };
-    UserRatingController.getRatingById = function (request, response) {
+    UserRatingsController.getRatingById = function (request, response) {
         var ratingId = request.params.id;
-        usersrating_1.default.findById(ratingId, function (error, ratingById) {
+        usersRatings_1.default.findById(ratingId, function (error, ratingById) {
             if (error) {
                 response.status(500).send("Unable to find Rating");
             }
             response.status(200).json({ ratingById: ratingById });
         });
     };
-    UserRatingController.updateRating = function (request, response) {
+    UserRatingsController.updateRating = function (request, response) {
         var ratingId = request.params.id;
-        usersrating_1.default.findByIdAndUpdate(ratingId, request.body, function (error, rating) {
+        usersRatings_1.default.findByIdAndUpdate(ratingId, request.body, function (error, rating) {
             if (error) {
                 response.status(500).json("Unable to Update Rating");
             }
             response.status(200).json({ rating: rating });
         });
     };
-    UserRatingController.removeRating = function (request, response) {
+    UserRatingsController.removeRating = function (request, response) {
         var ratingId = request.params.id;
-        usersrating_1.default.findByIdAndRemove(ratingId, function (error, ratingToRemove) {
+        usersRatings_1.default.findByIdAndRemove(ratingId, function (error, ratingToRemove) {
             if (error) {
                 response.status(500).json("Unable to Remove Rating");
             }
             response.status(200).json({ ratingToRemove: ratingToRemove });
         });
     };
-    return UserRatingController;
+    return UserRatingsController;
 }());
-exports.UserRatingController = UserRatingController;
+exports.UserRatingsController = UserRatingsController;
 //# sourceMappingURL=userRatingController.js.map

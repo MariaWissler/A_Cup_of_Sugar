@@ -2,8 +2,8 @@ import * as express from "express";
 import { UserController } from "../controllers/userController";
 import { AddressController } from "../controllers/addressController";
 import { ProductController } from "../controllers/productController";
-import { ProductCollectionController } from "../controllers/productCollectionController";
-import { UserRatingController } from "../controllers/userRatingController";
+import { CollectedProductsController } from "../controllers/productCollectionController";
+import { UserRatingsController } from "../controllers/userRatingsController";
 
 // app es parametro 
 export default (app)=>{
@@ -31,10 +31,8 @@ export default (app)=>{
     userRouter.get('/:id', UserController.getUserById);
     userRouter.post('/', UserController.createUser);
     userRouter.put('/:id', UserController.updateUser);
-    userRouter.delete('/:id', UserController.removeUser); 
-
-
-
+    userRouter.delete('/:id', UserController.removeUser);
+ 
     //Define routes for address
     addressRouter.get('/', AddressController.getAddress);
     addressRouter.get('/:id', AddressController.getAddressById);
@@ -50,18 +48,18 @@ export default (app)=>{
     productRouter.delete('/:id', ProductController.removeProduct);
 
     //Define routes for Collected Products
-    productCollectedRouter.get('/', ProductCollectionController.getCollectedProducts);
-    productCollectedRouter.get('/:id', ProductCollectionController.getCollectedProductById);
-    productCollectedRouter.post('/', ProductCollectionController.createProductCollected);
-    productCollectedRouter.put('/:id', ProductCollectionController.updateCollectedProduct);
-    productCollectedRouter.delete('/:id', ProductCollectionController.removeCollectedProduct);
+    productCollectedRouter.get('/', CollectedProductsController.getCollectedProducts);
+    productCollectedRouter.get('/:id', CollectedProductsController.getCollectedProductById);
+    productCollectedRouter.post('/', CollectedProductsController.createCollectedProduct);
+    productCollectedRouter.put('/:id', CollectedProductsController.updateCollectedProduct);
+    productCollectedRouter.delete('/:id', CollectedProductsController.removeCollectedProduct);
 
     //Define routes for Rating
-    userRateRouter.get('/', UserRatingController.getRatings);
-    userRateRouter.get('/:id', UserRatingController.getRatingById);
-    userRateRouter.post('/', UserRatingController.createRating);
-    userRateRouter.put('/:id', UserRatingController.updateRating);
-    userRateRouter.delete('/:id', UserRatingController.removeRating);
+    userRateRouter.get('/', UserRatingsController.getRatings);
+    userRateRouter.get('/:id', UserRatingsController.getRatingById);
+    userRateRouter.post('/', UserRatingsController.createRating);
+    userRateRouter.put('/:id', UserRatingsController.updateRating);
+    userRateRouter.delete('/:id', UserRatingsController.removeRating);
 
     // Colleccion de Rutas 
     app.use('/api', apiRoutes);

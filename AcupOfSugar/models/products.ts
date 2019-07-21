@@ -1,39 +1,29 @@
 import * as mongoose from "mongoose";
 import * as uuid from "uuid";
+import { prop, staticMethod, instanceMethod, Typegoose, ModelType, InstanceType, Ref } from 'typegoose';
+import {Addresses} from "./addresses";
 
-const Schema = mongoose.Schema;
+export class Products extends Typegoose{
+@prop({unique:true,default:uuid.v1()})
+_id:String;
 
-const productsSchema = new Schema ({
-   id: {
-      type:String, 
-      default: function createGuid(){
-         return uuid.v1();
-      }
-   },
-   addressId: { 
-      type:String, 
-      ref:"Addresses", 
-      required:true
-   },
-   productName:  {
-      type:String, 
-      default:"", 
-      required:true 
-   },
-   productDescription : {
-      type:String, 
-      default:"", 
-      required:true
-   },
-   productImage: {
-      type:Buffer, 
-      required:true
-   },
-   availability: {
-      type:Boolean, 
-      default:false, 
-      required:true
-   }
-});
+@prop({required:true})
+_addressId:String;
 
-export default mongoose.model("Products", productsSchema);
+@prop({required:true})
+name:String;
+
+@prop({required:true})
+description:String;
+
+@prop({required:true})
+availability:Boolean;
+
+@prop({required:true})
+image:Uint8Array;
+}
+
+const ProductModel = new Products().getModelForClass(Products);
+
+export default ProductModel;
+

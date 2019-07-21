@@ -35,44 +35,45 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var users_1 = require("../models/users");
-var UserController = /** @class */ (function () {
-    function UserController() {
+var usersRatings_1 = require("../models/usersRatings");
+var UserRatingsController = /** @class */ (function () {
+    function UserRatingsController() {
     }
-    UserController.createUser = function (request, response) {
+    UserRatingsController.createRating = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, userName, name, email, newUser, error_1;
+            var _a, userOwnerId, userRequesterId, productRequestedId, rating, newRating, error_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        _a = request.body, userName = _a.userName, name = _a.name, email = _a.email;
-                        if (!userName || !email || !name) {
+                        _a = request.body, userOwnerId = _a.userOwnerId, userRequesterId = _a.userRequesterId, productRequestedId = _a.productRequestedId, rating = _a.rating;
+                        if (!userOwnerId || !userRequesterId || !productRequestedId || !rating) {
                             return [2 /*return*/, response.status(422).send({
-                                    message: "Please provide email, username & name"
+                                    message: "Users information and rating ins required"
                                 })];
                         }
-                        newUser = new users_1.default();
-                        newUser.name = name;
-                        newUser.userName = userName;
-                        newUser.email = email;
+                        newRating = new usersRatings_1.default();
+                        newRating.userOwnerId = userOwnerId;
+                        newRating.userRequesterId = userRequesterId;
+                        newRating.productRequestedId = productRequestedId;
+                        newRating.rating = rating;
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, newUser.save()];
+                        return [4 /*yield*/, newRating.save()];
                     case 2:
                         _b.sent();
                         response.send({
-                            userName: newUser.userName,
-                            email: newUser.email,
-                            name: newUser.name,
-                            id: newUser.id
+                            userOwnerId: newRating.userOwnerId,
+                            userRequesterId: newRating.userRequesterId,
+                            productRequestedId: newRating.productRequestedId,
+                            rating: newRating.rating
                         });
                         return [3 /*break*/, 4];
                     case 3:
                         error_1 = _b.sent();
                         console.log(error_1.message);
                         response.status(500).send({
-                            message: 'Server ecountered an error. Please try again'
+                            message: "Server ecountered an error. Please try again"
                         });
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
@@ -80,45 +81,42 @@ var UserController = /** @class */ (function () {
             });
         });
     };
-    UserController.getUsers = function (request, response) {
-        users_1.default.find(function (error, users) {
+    UserRatingsController.getRatings = function (request, response) {
+        usersRatings_1.default.find(function (error, ratings) {
             if (error) {
-                response.status(500).send("Users not Found");
+                response.status(500).send("Ratings not Found");
             }
-            response.status(200).json({ users: users });
+            response.json(ratings);
         });
     };
-    UserController.getUserById = function (request, response) {
-        var userId = request.params.id;
-        users_1.default.findById(userId, function (error, user) {
+    UserRatingsController.getRatingById = function (request, response) {
+        var ratingId = request.params.id;
+        usersRatings_1.default.findById(ratingId, function (error, ratingById) {
             if (error) {
-                return response.status(500).send("Unable to find Id");
+                response.status(500).send("Unable to find Rating");
             }
-            return response.status(200).json({ user: user });
+            response.status(200).json({ ratingById: ratingById });
         });
     };
-    UserController.updateUser = function (request, response) {
-        var userId = request.params.id;
-        users_1.default.findByIdAndUpdate(userId, request.body, function (error, user) {
+    UserRatingsController.updateRating = function (request, response) {
+        var ratingId = request.params.id;
+        usersRatings_1.default.findByIdAndUpdate(ratingId, request.body, function (error, rating) {
             if (error) {
-                return response.status(500).json("Unable to Update User Info");
+                response.status(500).json("Unable to Update Rating");
             }
-            response.status(200).json({ user: user });
+            response.status(200).json({ rating: rating });
         });
     };
-    UserController.removeUser = function (request, response) {
-        var userId = request.params.id;
-        users_1.default.findByIdAndRemove(userId, function (error, userToRemove) {
+    UserRatingsController.removeRating = function (request, response) {
+        var ratingId = request.params.id;
+        usersRatings_1.default.findByIdAndRemove(ratingId, function (error, ratingToRemove) {
             if (error) {
-                return response.status(500).json({
-                    message: "Unable to Remove User"
-                });
+                response.status(500).json("Unable to Remove Rating");
             }
-            console.log('I will not run after error ');
-            response.status(200).json({ userToRemove: userToRemove });
+            response.status(200).json({ ratingToRemove: ratingToRemove });
         });
     };
-    return UserController;
+    return UserRatingsController;
 }());
-exports.UserController = UserController;
-//# sourceMappingURL=userController.js.map
+exports.UserRatingsController = UserRatingsController;
+//# sourceMappingURL=userRatingsController.js.map

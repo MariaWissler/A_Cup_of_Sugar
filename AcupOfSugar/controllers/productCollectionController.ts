@@ -1,33 +1,8 @@
-import ProductCollectedModel from "../models/productsCollected";
+import CollectedProductsModel from "../models/collectedProducts";
 
-export class ProductCollectionController {
-  static async createProductCollected(request, response) {
-    // //   var productId = request.body.productId;
-    // //   var ownerId = request.body.ownerId;
-    // //   var requesterId = request.body.requesterId;
-    // //   var date = request.body.date;
-    // //   var collected = request.body.collected;
-    // //  // 422 client error
-    //  if(productId == null || productId == ""){
-    //    return response.status(422).send('Product Id cant be empty');
-    //  }
-
-    //  if(ownerId == null || ownerId == ""){
-    //    return response.status(422).send('Owner Id cant be empty');
-    //  }
-
-    //  if(requesterId == null || requesterId == ""){
-    //    return response.status(422).send('Requester Id cant be empty');
-    //  }
-
-    //  if(date== null){
-    //   return response.status(422).send('We need a valid Date');
-    // }
-
-    //  if(collected == null){ // string, how to validate an image ?
-    //   return response.status(422).send('Product needs to be collected to be on the records');
-    // }
-
+export class CollectedProductsController {
+  static async createCollectedProduct(request, response) {
+  
     const { productId, ownerId, requesterId, date, collected } = request.body;
 
     if (!productId || !ownerId || !requesterId || !date || !collected) {
@@ -36,14 +11,14 @@ export class ProductCollectionController {
       });
     }
 
-    const newProductCollected = new ProductCollectedModel({
-      productId,
-      ownerId,
-      requesterId,
-      date,
-      collected
-    });
-
+    let newProductCollected = new CollectedProductsModel();
+      newProductCollected.productId = productId;
+      newProductCollected.ownerId = ownerId;
+      newProductCollected.requesterId = requesterId;
+      newProductCollected.date = date;
+      newProductCollected.collected = collected;
+    
+    try {
     await newProductCollected.save();
 
     response.send({
@@ -53,17 +28,18 @@ export class ProductCollectionController {
       date: newProductCollected.date,
       collected: newProductCollected.collected
     });
-  }
 
-  //  newProductCollected.save((error, newProductCollected)=>{
-  //   if(error){
-  //       response.status(500).send('Unable to save Status for this Product');
-  //   }
-  //   response.status(200).json({newProductCollected});
-  // }); }
+    } catch (error) {
+    console.log(error.message);
+    response.status(500).send({
+      message: 'Server ecountered an error. Please try again'
+    });
+  }
+}
 
   static getCollectedProducts(request, response) {
-    ProductCollectedModel.find((error, collections) => {
+
+    CollectedProductsModel.find((error, collections) => {
       if (error) {
         response.status(500).send("Collected Product not Found");
       }
@@ -74,7 +50,7 @@ export class ProductCollectionController {
   static getCollectedProductById(request, response) {
     var collectedProductId = request.params.id;
 
-    ProductCollectedModel.findById(
+    CollectedProductsModel.findById(
       collectedProductId,
       (error, collectedProductId) => {
         if (error) {
@@ -88,7 +64,7 @@ export class ProductCollectionController {
   static updateCollectedProduct(request, response) {
     var collectedProductId = request.params.id;
 
-    ProductCollectedModel.findByIdAndUpdate(
+    CollectedProductsModel.findByIdAndUpdate(
       collectedProductId,
       request.body,
       (error, collectedProduct) => {
@@ -103,14 +79,13 @@ export class ProductCollectionController {
   static removeCollectedProduct(request, response) {
     var collectedProductId = request.params.id;
 
-    ProductCollectedModel.findByIdAndRemove(
+    CollectedProductsModel.findByIdAndRemove(
       collectedProductId,
       (error, collectedProductToRemove) => {
         if (error) {
           response.status(500).json("Unable to Remove Collected Product");
         }
         response.status(200).json({ collectedProductToRemove });
-      }
-    );
+      });
   }
 }

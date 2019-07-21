@@ -18,52 +18,36 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var uuid = require("uuid");
 var typegoose_1 = require("typegoose");
-// //const Schema = mongoose.Schema;
-// //const usersSchema = new Schema ({
-//    id: {
-//       type:String, 
-//       default: function createGuid(){
-//          return uuid.v1();
-//        }
-//       }, 
-//    userName: {
-//       type:String, 
-//       default:"", 
-//       required:true
-//    },
-//    name:  {
-//       type:String,
-//        default:"", 
-//        required:true 
-//       },
-//    email: {
-//       type:String, 
-//       default:"", 
-//       required:true
-//    }
-// });
-// export default mongoose.model("Users", usersSchema);
 var Users = /** @class */ (function (_super) {
     __extends(Users, _super);
     function Users() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     __decorate([
-        typegoose_1.prop({ unique: true, default: uuid.v1() })
+        typegoose_1.prop({ unique: true, default: uuid.v1() }),
+        __metadata("design:type", String)
     ], Users.prototype, "_id", void 0);
     __decorate([
-        typegoose_1.prop({ required: true })
+        typegoose_1.prop({ required: true }),
+        __metadata("design:type", String)
     ], Users.prototype, "userName", void 0);
     __decorate([
-        typegoose_1.prop({ required: true })
+        typegoose_1.prop({ required: true }),
+        __metadata("design:type", String)
     ], Users.prototype, "name", void 0);
     __decorate([
-        typegoose_1.prop({ required: true })
+        typegoose_1.prop({ required: true }),
+        __metadata("design:type", String)
     ], Users.prototype, "email", void 0);
     return Users;
 }(typegoose_1.Typegoose));
 exports.Users = Users;
+var UserModel = new Users().getModelForClass(Users);
+exports.default = UserModel;
 //# sourceMappingURL=users.js.map

@@ -41,26 +41,25 @@ var AddressController = /** @class */ (function () {
     }
     AddressController.createAddress = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, userId, street, streetNumber, aptNumber, city, zipCode, state, country, newAddress, error_1;
+            var _a, _userId, street, intNumber, extNumber, neighborhood, zipCode, state, country, newAddress, error_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        _a = request.body, userId = _a.userId, street = _a.street, streetNumber = _a.streetNumber, aptNumber = _a.aptNumber, city = _a.city, zipCode = _a.zipCode, state = _a.state, country = _a.country;
-                        if (!userId || !street || !streetNumber || !city || !zipCode || !state || !country) {
+                        _a = request.body, _userId = _a._userId, street = _a.street, intNumber = _a.intNumber, extNumber = _a.extNumber, neighborhood = _a.neighborhood, zipCode = _a.zipCode, state = _a.state, country = _a.country;
+                        if (!_userId || !street || !extNumber || !neighborhood || !zipCode || !state || !country) {
                             return [2 /*return*/, response.status(422).send({
                                     message: "Please provide full address details (userId, street, streetNumber, aptNumber, city, zipCode, state, country)"
                                 })];
                         }
-                        newAddress = new addresses_1.default({
-                            userId: userId,
-                            street: street,
-                            streetNumber: streetNumber,
-                            aptNumber: aptNumber,
-                            city: city,
-                            zipCode: zipCode,
-                            state: state,
-                            country: country
-                        });
+                        newAddress = new addresses_1.default();
+                        newAddress._userId = _userId;
+                        newAddress.street = street;
+                        newAddress.intNumber = intNumber;
+                        newAddress.extNumber = extNumber;
+                        newAddress.neighborhood = neighborhood;
+                        newAddress.zipCode = zipCode;
+                        newAddress.state = state;
+                        newAddress.country = country;
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 3, , 4]);
@@ -68,11 +67,11 @@ var AddressController = /** @class */ (function () {
                     case 2:
                         _b.sent();
                         response.send({
-                            userId: newAddress.userId,
+                            _userId: newAddress._userId,
                             street: newAddress.street,
-                            streetNumber: newAddress.streetNumber,
-                            aptNumber: newAddress.aptNumber,
-                            city: newAddress.city,
+                            extNumber: newAddress.extNumber,
+                            intNumber: newAddress.intNumber,
+                            neighborhood: newAddress.neighborhood,
                             zipCode: newAddress.zipCode,
                             state: newAddress.state,
                             country: newAddress.country

@@ -24,38 +24,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var uuid = require("uuid");
 var typegoose_1 = require("typegoose");
-var Products = /** @class */ (function (_super) {
-    __extends(Products, _super);
-    function Products() {
+var CollectedProducts = /** @class */ (function (_super) {
+    __extends(CollectedProducts, _super);
+    function CollectedProducts() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     __decorate([
         typegoose_1.prop({ unique: true, default: uuid.v1() }),
         __metadata("design:type", String)
-    ], Products.prototype, "_id", void 0);
+    ], CollectedProducts.prototype, "_id", void 0);
     __decorate([
         typegoose_1.prop({ required: true }),
         __metadata("design:type", String)
-    ], Products.prototype, "_addressId", void 0);
+    ], CollectedProducts.prototype, "productId", void 0);
     __decorate([
         typegoose_1.prop({ required: true }),
         __metadata("design:type", String)
-    ], Products.prototype, "name", void 0);
+    ], CollectedProducts.prototype, "ownerId", void 0);
     __decorate([
         typegoose_1.prop({ required: true }),
         __metadata("design:type", String)
-    ], Products.prototype, "description", void 0);
+    ], CollectedProducts.prototype, "requesterId", void 0);
+    __decorate([
+        typegoose_1.prop({ required: true }),
+        __metadata("design:type", Date)
+    ], CollectedProducts.prototype, "date", void 0);
     __decorate([
         typegoose_1.prop({ required: true }),
         __metadata("design:type", Boolean)
-    ], Products.prototype, "availability", void 0);
-    __decorate([
-        typegoose_1.prop({ required: true }),
-        __metadata("design:type", Uint8Array)
-    ], Products.prototype, "image", void 0);
-    return Products;
+    ], CollectedProducts.prototype, "collected", void 0);
+    return CollectedProducts;
 }(typegoose_1.Typegoose));
-exports.Products = Products;
-var ProductModel = new Products().getModelForClass(Products);
-exports.default = ProductModel;
-//# sourceMappingURL=products.js.map
+exports.CollectedProducts = CollectedProducts;
+var CollectedProductsModel = new CollectedProducts().getModelForClass(CollectedProducts);
+exports.default = CollectedProductsModel;
+//# sourceMappingURL=collectedProducts.js.map

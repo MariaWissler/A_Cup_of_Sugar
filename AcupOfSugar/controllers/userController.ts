@@ -1,5 +1,5 @@
 import UserModel from "../models/users";
-import { prop, Typegoose, ModelType, InstanceType } from 'typegoose';
+
 
 export class UserController {
   static async createUser(request, response) {
@@ -11,12 +11,11 @@ export class UserController {
       });
     }
 
-    const newUser = new UserModel({
-      userName,
-      email,
-      name
-    });
-
+    let newUser = new UserModel();
+    newUser.name = name;
+    newUser.userName=userName;
+    newUser.email=email;
+    
     try {
       await newUser.save();
 
@@ -33,32 +32,6 @@ export class UserController {
         message: 'Server ecountered an error. Please try again'
       })
     }
-
-    //   if(userName == null || userName == ""){
-    //     return response.status(422).send('Username cant be empty');
-    //   }
-
-    //   if(name == null || name == ""){
-    //     return response.status(422).send('User Name cant be empty');
-    //   }
-
-    //   if(email == null || email == ""){
-    //     return response.status(422).send('User Email cant be empty');
-    //   }
-    //   // crear un nuevo Objeto
-    //   var newUser = new UserModel({
-    //       userName,
-    //       name,
-    //       email
-    //   });
-
-    //   //new user is object
-    //   newUser.save((error, newUser)=>{
-    //     if(error){
-    //         response.status(500).send('Unable to create user');
-    //     }
-    //     response.status(200).json({newUser});
-    //   });
   }
 
   static getUsers(request, response) {

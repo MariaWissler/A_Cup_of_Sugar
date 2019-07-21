@@ -35,13 +35,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var productsCollected_1 = require("../models/productsCollected");
-var ProductCollectionController = /** @class */ (function () {
-    function ProductCollectionController() {
+var collectedProducts_1 = require("../models/collectedProducts");
+var CollectedProductsController = /** @class */ (function () {
+    function CollectedProductsController() {
     }
-    ProductCollectionController.createProductCollected = function (request, response) {
+    CollectedProductsController.createCollectedProduct = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, productId, ownerId, requesterId, date, collected, newProductCollected;
+            var _a, productId, ownerId, requesterId, date, collected, newProductCollected, error_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -51,15 +51,17 @@ var ProductCollectionController = /** @class */ (function () {
                                     message: "Please provide all details for Collected Product"
                                 })];
                         }
-                        newProductCollected = new productsCollected_1.default({
-                            productId: productId,
-                            ownerId: ownerId,
-                            requesterId: requesterId,
-                            date: date,
-                            collected: collected
-                        });
-                        return [4 /*yield*/, newProductCollected.save()];
+                        newProductCollected = new collectedProducts_1.default();
+                        newProductCollected.productId = productId;
+                        newProductCollected.ownerId = ownerId;
+                        newProductCollected.requesterId = requesterId;
+                        newProductCollected.date = date;
+                        newProductCollected.collected = collected;
+                        _b.label = 1;
                     case 1:
+                        _b.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, newProductCollected.save()];
+                    case 2:
                         _b.sent();
                         response.send({
                             productId: newProductCollected.productId,
@@ -68,53 +70,55 @@ var ProductCollectionController = /** @class */ (function () {
                             date: newProductCollected.date,
                             collected: newProductCollected.collected
                         });
-                        return [2 /*return*/];
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_1 = _b.sent();
+                        console.log(error_1.message);
+                        response.status(500).send({
+                            message: 'Server ecountered an error. Please try again'
+                        });
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    //  newProductCollected.save((error, newProductCollected)=>{
-    //   if(error){
-    //       response.status(500).send('Unable to save Status for this Product');
-    //   }
-    //   response.status(200).json({newProductCollected});
-    // }); }
-    ProductCollectionController.getCollectedProducts = function (request, response) {
-        productsCollected_1.default.find(function (error, collections) {
+    CollectedProductsController.getCollectedProducts = function (request, response) {
+        collectedProducts_1.default.find(function (error, collections) {
             if (error) {
                 response.status(500).send("Collected Product not Found");
             }
             response.json(collections);
         });
     };
-    ProductCollectionController.getCollectedProductById = function (request, response) {
+    CollectedProductsController.getCollectedProductById = function (request, response) {
         var collectedProductId = request.params.id;
-        productsCollected_1.default.findById(collectedProductId, function (error, collectedProductId) {
+        collectedProducts_1.default.findById(collectedProductId, function (error, collectedProductId) {
             if (error) {
                 response.status(500).send("Unable to find Collected Product");
             }
             response.status(200).json({ collectedProductId: collectedProductId });
         });
     };
-    ProductCollectionController.updateCollectedProduct = function (request, response) {
+    CollectedProductsController.updateCollectedProduct = function (request, response) {
         var collectedProductId = request.params.id;
-        productsCollected_1.default.findByIdAndUpdate(collectedProductId, request.body, function (error, collectedProduct) {
+        collectedProducts_1.default.findByIdAndUpdate(collectedProductId, request.body, function (error, collectedProduct) {
             if (error) {
                 response.status(500).json("Unable to Update Collected Product Info");
             }
             response.status(200).json({ collectedProduct: collectedProduct });
         });
     };
-    ProductCollectionController.removeCollectedProduct = function (request, response) {
+    CollectedProductsController.removeCollectedProduct = function (request, response) {
         var collectedProductId = request.params.id;
-        productsCollected_1.default.findByIdAndRemove(collectedProductId, function (error, collectedProductToRemove) {
+        collectedProducts_1.default.findByIdAndRemove(collectedProductId, function (error, collectedProductToRemove) {
             if (error) {
                 response.status(500).json("Unable to Remove Collected Product");
             }
             response.status(200).json({ collectedProductToRemove: collectedProductToRemove });
         });
     };
-    return ProductCollectionController;
+    return CollectedProductsController;
 }());
-exports.ProductCollectionController = ProductCollectionController;
+exports.CollectedProductsController = CollectedProductsController;
 //# sourceMappingURL=productCollectionController.js.map

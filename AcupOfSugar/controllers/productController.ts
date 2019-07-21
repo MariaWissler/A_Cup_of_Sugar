@@ -1,53 +1,35 @@
 import ProductModel from "../models/products";
+import * as fs from "fs";
+
 
 export class ProductController{
-
+  
   static async createProduct(request, response){
-        // var addressId = request.body.addressId;
-        // var productName = request.body.productName;
-        // var productDescription = request.body.productDescription;
-        // var productImage = request.body.productImage;
-        // var availability = request.body.availability;
-       // 422 client error 
-      //  if(addressId == null || addressId == ""){
-      //    return response.status(422).send('Address cant be empty');
-      //  }
-      //  if(productName == null || productName == ""){
-      //    return response.status(422).send('Product Name cant be empty');
-      //  }
-      //  if(productDescription== null || productDescription == ""){
-      //    return response.status(422).send('Product Description cant be empty');
-      //  }
-      //  if(productImage == null){ // string, how to validate an image ? 
-      //   return response.status(422).send('We need an image to show to other users');
-      // }
-      //  if(availability == null){ // string, how to validate an image ? 
-      //   return response.status(422).send('Product needs to be available');
-      // }
-      const {addressId, productName, productDescription, productImage, availability} = request.body;
-      
-      if(!addressId || !productName || !productDescription || !productImage || !availability) {
+        
+      let {_addressId, name, description, image,  availability} = request.body;
+      image = "./img/chewy.jpg";
+
+      if(!_addressId || !name || !description || !image || !availability) {
         return response.status(422).send({
             message: 'Please provide complete product details'
         })
-    }
+      }
  
-       const newProduct = new ProductModel({
-           addressId,
-           productName,
-           productDescription,
-           productImage,
-           availability
-       });
+    let newProduct = new ProductModel();
+    newProduct._addressId = _addressId;
+    newProduct.name = name;
+    newProduct.description = description;
+    newProduct.image= fs.readFileSync(image);
+    newProduct.availability = availability;
 
        try {
        await newProduct.save();
       
        response.send({
         addressId : newProduct.addressId,
-        productName: newProduct,
-        productDescription: newProduct.productDescription,
-        productImage: newProduct.productImage,
+        name: newProduct.name,
+        description: newProduct.description,
+        image: newProduct.image,
         availability: newProduct.availability
        });
 
@@ -57,13 +39,6 @@ export class ProductController{
           message: 'Server ecountered an error. Please try again'
         })
       }
-
-      //  newProduct.save((error, newProduct)=>{
-      //   if(error){
-      //       response.status(500).send('Unable to create Product');
-      //   }
-      //   response.status(200).json({newProduct});
-      // });
 
        }
 

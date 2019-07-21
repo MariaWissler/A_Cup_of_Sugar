@@ -2,72 +2,34 @@ import AddressModel from "../models/addresses";
 
 export class AddressController{ // to do check how to import the google maps addresss
     static async createAddress(request, response){
-      //   var userId = request.body.userId; // is this needed ? 
-      //   var street = request.body.street;
-      //   var streetNumber = request.body.streetNumber;
-      //   var aptNumber = request.body.aptNumber;// this is not required how do we validate 
-      //   var city = request.body.city;
-      //   var zipCode = request.body.zipCode;
-      //   var state = request.body.state;
-      //   var country = request.body.country; // is this needed ? 
       
-      //   // 422 client error 
-      //  if(userId == null || userId == ""){ 
-      //    return response.status(422).send('User cant be empty');
-      //  }
- 
-      //  if(street == null || street == ""){
-      //    return response.status(422).send('Street cant be empty');
-      //  }
- 
-      //  if(streetNumber == null || streetNumber == ""){
-      //    return response.status(422).send('Street Number cant be empty');
-      //  }
-
-      //  if(city == null || city == ""){
-      //   return response.status(422).send('city cant be empty');
-      // }
-
-      // if(zipCode == null || zipCode == ""){
-      //   return response.status(422).send('zipCode cant be empty');
-      // }
-
-      // if(state == null || state == ""){
-      //   return response.status(422).send('state cant be empty');
-      // }
-
-      // if(country == null || country == ""){
-      //   return response.status(422).send('Country cant be empty');
-      // }
-       // crear un nuevo Objeto 
-       const {userId, street, streetNumber, aptNumber, city, zipCode, state, country} = request.body;
+       const {_userId, street, intNumber, extNumber, neighborhood, zipCode, state, country} = request.body;
        
-       if (!userId || !street || !streetNumber || !city || !zipCode || !state || !country){
+       if (!_userId || !street || !extNumber || !neighborhood || !zipCode || !state || !country){
         return response.status(422).send({
           message: "Please provide full address details (userId, street, streetNumber, aptNumber, city, zipCode, state, country)"
         });
       }
 
-       const newAddress = new AddressModel({
-           userId,
-           street,
-           streetNumber,
-           aptNumber,
-           city,
-           zipCode,
-           state,
-           country
-       });
+      let newAddress = new AddressModel();
+      newAddress._userId=_userId;
+      newAddress.street=street;
+      newAddress.intNumber = intNumber;
+      newAddress.extNumber= extNumber;
+      newAddress.neighborhood = neighborhood;
+      newAddress.zipCode= zipCode;
+      newAddress.state=state;
+      newAddress.country = country;
 
        try {
        await newAddress.save();
 
        response.send({
-        userId: newAddress.userId,
+        _userId: newAddress._userId,
         street: newAddress.street,
-        streetNumber: newAddress.streetNumber,
-        aptNumber: newAddress.aptNumber,
-        city: newAddress.city,
+        extNumber: newAddress.extNumber,
+        intNumber: newAddress.intNumber,
+        neighborhood: newAddress.neighborhood,
         zipCode: newAddress.zipCode,
         state: newAddress.state,
         country: newAddress.country

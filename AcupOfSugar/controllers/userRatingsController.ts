@@ -1,13 +1,8 @@
-import RatingModel from "../models/usersrating";
+import UserRatingsModel from "../models/usersRatings";
 
-export class UserRatingController {
+export class UserRatingsController {
   static async createRating(request, response) {
-    //   var userOwnerId = request.body.userOwnerId;
-    //   var userRequesterId = request.body.userRequesterId;
-    //   var productRequestedId = request.body.productRequestedId;
-    //   var rating = request.body.rating;
-    //  // 422 client error
-
+   
     const {
       userOwnerId,
       userRequesterId,
@@ -20,31 +15,13 @@ export class UserRatingController {
         message: "Users information and rating ins required"
       });
     }
-    //  if(userOwnerId == null || userOwnerId == ""){
-    //    return response.status(422).send('User Id cant be empty');
-    //  }
-
-    //  if(userRequesterId == null || userRequesterId == ""){
-    //    return response.status(422).send('Requester Id cant be empty');
-    //  }
-
-    //  if(productRequestedId == null || productRequestedId == ""){
-    //    return response.status(422).send('Product Id cant be empty');
-    //  }
-
-    //  if(rating == null || rating == ""){
-    //   return response.status(422).send('Rating cant be empty'); // validate
-    // }
-
-    // crear un nuevo Objeto
-    const newRating = new RatingModel({
-      userOwnerId,
-      userRequesterId,
-      productRequestedId,
-      rating
-    });
-
-    //new user is object
+    
+    let newRating = new UserRatingsModel();
+      newRating.userOwnerId = userOwnerId;
+      newRating.userRequesterId = userRequesterId;
+      newRating.productRequestedId = productRequestedId;
+      newRating.rating = rating;
+    
     try {
       await newRating.save();
 
@@ -53,7 +30,9 @@ export class UserRatingController {
         userRequesterId: newRating.userRequesterId,
         productRequestedId: newRating.productRequestedId,
         rating: newRating.rating
+
       });
+
     } catch (error) {
       console.log(error.message);
       response.status(500).send({
@@ -63,7 +42,7 @@ export class UserRatingController {
   }
 
   static getRatings(request, response) {
-    RatingModel.find((error, ratings) => {
+    UserRatingsModel.find((error, ratings) => {
       if (error) {
         response.status(500).send("Ratings not Found");
       }
@@ -74,7 +53,7 @@ export class UserRatingController {
   static getRatingById(request, response) {
     var ratingId = request.params.id;
 
-    RatingModel.findById(ratingId, (error, ratingById) => {
+    UserRatingsModel.findById(ratingId, (error, ratingById) => {
       if (error) {
         response.status(500).send("Unable to find Rating");
       }
@@ -85,7 +64,7 @@ export class UserRatingController {
   static updateRating(request, response) {
     var ratingId = request.params.id;
 
-    RatingModel.findByIdAndUpdate(ratingId, request.body, (error, rating) => {
+    UserRatingsModel.findByIdAndUpdate(ratingId, request.body, (error, rating) => {
       if (error) {
         response.status(500).json("Unable to Update Rating");
       }
@@ -96,7 +75,7 @@ export class UserRatingController {
   static removeRating(request, response) {
     var ratingId = request.params.id;
 
-    RatingModel.findByIdAndRemove(ratingId, (error, ratingToRemove) => {
+    UserRatingsModel.findByIdAndRemove(ratingId, (error, ratingToRemove) => {
       if (error) {
         response.status(500).json("Unable to Remove Rating");
       }

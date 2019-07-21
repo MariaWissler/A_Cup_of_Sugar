@@ -36,28 +36,29 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var products_1 = require("../models/products");
+var fs = require("fs");
 var ProductController = /** @class */ (function () {
     function ProductController() {
     }
     ProductController.createProduct = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, addressId, productName, productDescription, productImage, availability, newProduct, error_1;
+            var _a, _addressId, name, description, image, availability, newProduct, error_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        _a = request.body, addressId = _a.addressId, productName = _a.productName, productDescription = _a.productDescription, productImage = _a.productImage, availability = _a.availability;
-                        if (!addressId || !productName || !productDescription || !productImage || !availability) {
+                        _a = request.body, _addressId = _a._addressId, name = _a.name, description = _a.description, image = _a.image, availability = _a.availability;
+                        image = "./img/chewy.jpg";
+                        if (!_addressId || !name || !description || !image || !availability) {
                             return [2 /*return*/, response.status(422).send({
                                     message: 'Please provide complete product details'
                                 })];
                         }
-                        newProduct = new products_1.default({
-                            addressId: addressId,
-                            productName: productName,
-                            productDescription: productDescription,
-                            productImage: productImage,
-                            availability: availability
-                        });
+                        newProduct = new products_1.default();
+                        newProduct._addressId = _addressId;
+                        newProduct.name = name;
+                        newProduct.description = description;
+                        newProduct.image = fs.readFileSync(image);
+                        newProduct.availability = availability;
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 3, , 4]);
@@ -66,9 +67,9 @@ var ProductController = /** @class */ (function () {
                         _b.sent();
                         response.send({
                             addressId: newProduct.addressId,
-                            productName: newProduct,
-                            productDescription: newProduct.productDescription,
-                            productImage: newProduct.productImage,
+                            name: newProduct.name,
+                            description: newProduct.description,
+                            image: newProduct.image,
                             availability: newProduct.availability
                         });
                         return [3 /*break*/, 4];

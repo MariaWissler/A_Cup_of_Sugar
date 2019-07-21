@@ -5,6 +5,7 @@ import { prop, Typegoose, ModelType, InstanceType } from "typegoose";
 export class Users extends Typegoose{
    @prop({unique:true,default:uuid.v1()})
    _id:String;
+   
    @prop({required:true})
    userName:String;
    
@@ -16,4 +17,4 @@ export class Users extends Typegoose{
    }
    const UserModel = new Users().getModelForClass(Users);
 
-   export default UserModel;
+export default UserModel;
