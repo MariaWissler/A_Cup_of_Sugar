@@ -1,4 +1,11 @@
 .navbar-div{
     background-color: #ffff3d !important;
-    padding: 1%;
+    padding: .5%;
+    font-family: 'Permanent Marker', cursive;
+    font-size: 1.1em;
 }
+.nav-link{
+    color: green !important;
+}
+
+

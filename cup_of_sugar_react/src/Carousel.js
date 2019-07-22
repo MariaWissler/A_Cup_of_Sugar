@@ -1,6 +1,7 @@
 import React from "react";
 import { MDBCarousel, MDBCarouselCaption, MDBCarouselInner, MDBCarouselItem, MDBView, MDBMask, MDBContainer } from
 "mdbreact";
+import { Button } from 'reactstrap';
 import './Carousel.css'
 
 const Carousel = () => {
@@ -25,8 +26,9 @@ const Carousel = () => {
           <MDBMask overlay="black-light" />
           </MDBView>
           <MDBCarouselCaption>
-            <h3 className="h3-responsive">A cup of Sugar</h3>
-            <p>A Seattle based App</p>
+            <h3 className="h3-responsive ">A cup of Sugar</h3>
+            <p className="text">Most people waste more food than they think...</p>
+            <p className="text">—here is how to fix it!</p>
           </MDBCarouselCaption>
         </MDBCarouselItem>
         <MDBCarouselItem itemId="2">
@@ -40,8 +42,10 @@ const Carousel = () => {
           <MDBMask overlay="black-light" />
           </MDBView>
           <MDBCarouselCaption>
-            <h3 className="h3-responsive">Have Extras?</h3>
-            <p>Second text</p>
+            <h3 className="h3-responsive">Got extras?</h3>
+            <p className="text">A third of the food we produce globally is thrown away
+
+</p>
           </MDBCarouselCaption>
         </MDBCarouselItem>
         <MDBCarouselItem itemId="3">
@@ -55,8 +59,8 @@ const Carousel = () => {
           <MDBMask overlay="black-light" />
           </MDBView>
           <MDBCarouselCaption>
-            <h3 className="h3-responsive">Share it !</h3>
-            <p>Third text</p>
+            <h3 className="h3-responsive">Share it</h3>
+            <p className="text">Is easy!</p>
           </MDBCarouselCaption>
         </MDBCarouselItem>
         <MDBCarouselItem itemId="4">
@@ -71,7 +75,7 @@ const Carousel = () => {
           </MDBView>
           <MDBCarouselCaption>
             <h3 className="h3-responsive">Reduce</h3>
-            <p>Second text</p>
+            <p className="text">Imagine a future where our most precious resources are shared, not thrown away.</p>
           </MDBCarouselCaption>
         </MDBCarouselItem>
       </MDBCarouselInner>

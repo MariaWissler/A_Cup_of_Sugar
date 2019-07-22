@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Carousel  from "./Carousel";
-import Signup  from "./Signup";
-import Navbar  from "./Navbar";
+//import Signup  from "./Signup";
 import './App.css';
-
+import FooterPage from './Footer';
 
 
 class App extends Component {
@@ -12,15 +11,15 @@ class App extends Component {
   
     return (
       <div className="App">
-         <Carousel/>    
+        
+         <Carousel/>   
+         
          <div className="app-title">
-         <h1 className="join-community">Join the Community that makes a difference in  Food Waste</h1>
-         <p>Most people waste more food than they think—here's how to fix it,
-         a Cup of Sugar is a Seattle based App connecting neighbours with each other, 
-         you just have to share it!</p>
+         <h1 className="join-community">Join the Community that Reduces Food Waste!</h1>
+ 
          </div>
-         <div className="form">
-         <Signup className="form"></Signup>
+         <div>
+           <FooterPage/>
          </div>
        </div>
 

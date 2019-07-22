@@ -1,22 +1,21 @@
 .App {
   text-align: center !important;
-  
+  font-family: 'Permanent Marker', cursive;
 }
 
 .app-title {
   align-content: center !important;
   background-color:#97CC04;
 
+
 }
 
 .join-community{
   color: white;
+  padding: 2%;
 }
 
-.form{
-align-content: center !important;
-background-color:#EF8A17;
-}
+
 
 
 
