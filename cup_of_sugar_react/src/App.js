@@ -8,7 +8,6 @@ import FooterPage from './Footer';
 
 class App extends Component {
     render() {
-  
     return (
       <div className="App">
         
@@ -16,7 +15,6 @@ class App extends Component {
          
          <div className="app-title">
          <h1 className="join-community">Join the Community that Reduces Food Waste!</h1>
- 
          </div>
          <div>
            <FooterPage/>

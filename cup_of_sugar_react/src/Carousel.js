@@ -13,6 +13,7 @@ const Carousel = () => {
       showControls={true}
       showIndicators={true}
       className="z-depth-1"
+      interval={1000}
     >
       <MDBCarouselInner>
         <MDBCarouselItem itemId="1">

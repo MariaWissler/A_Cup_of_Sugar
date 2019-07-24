@@ -1,8 +1,15 @@
+.carousel-caption {
+ text-align: center;
+ width: 100%;
+ background-color: white;
+ opacity: 0.7;
+ position: absolute;
+ color: black;
+ left: 0 !important;
 
-
-
+  }
 .h3-responsive{
-  color: white ;
+  color: black ;
   font-size: 6.5em;
   font-family: 'Permanent Marker', cursive;
 }

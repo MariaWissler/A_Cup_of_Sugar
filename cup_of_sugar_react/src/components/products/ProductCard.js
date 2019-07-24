@@ -9,24 +9,22 @@ import {
   Button
 } from "reactstrap";
 
-const ProductCard = (prop) => {
+const ProductCard = prop => {
   return (
     <div className="product-card">
       <Card>
         <CardImg
           top
           width="100%"
-          src="https://starkist.com/sites/default/files/banner_images/category_page_CAN.png"
+          src={`http://localhost:3000/${prop.product.image}`}
           alt="Card image cap"
         />
         <CardBody>
-          <CardTitle>{ prop.product.name }</CardTitle>
-          <CardText> 
-            <p>Available</p>
-          </CardText>
+          <CardTitle>{prop.product.name}</CardTitle>
           <CardText>
-            { prop.product.description }
+            {prop.product.availability ? "Available" : "Not Available"}
           </CardText>
+          <CardText>{prop.product.description}</CardText>
           <Button>Request</Button>
         </CardBody>
       </Card>

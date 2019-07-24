@@ -30,7 +30,7 @@ export default class ProductList extends Component {
           <h1>{error}</h1>
         ) : (
           products.map(product => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product._id} product={product} />
           ))
         )}
       </div>
