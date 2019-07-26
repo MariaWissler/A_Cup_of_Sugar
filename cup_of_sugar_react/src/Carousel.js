@@ -6,14 +6,14 @@ import './Carousel.css'
 
 const Carousel = () => {
   return (
-      <MDBContainer>
+      <MDBContainer className="carousel">
       <MDBCarousel
       activeItem={1}
       length={4}
-      showControls={true}
-      showIndicators={true}
+      showControls
+      showIndicators
       className="z-depth-1"
-      interval={1000}
+      interval={2000}
     >
       <MDBCarouselInner>
         <MDBCarouselItem itemId="1">
@@ -21,7 +21,7 @@ const Carousel = () => {
             <img
               className="d-block w-100"t
               src="https://media.brstatic.com/2019/01/23163818/I-only-spend-150-a-month-on-groceries-heres-how.jpg"
-              style={{  height: 600}}
+              style={{  height: 550}}
               alt="First slide"
             />
           <MDBMask overlay="black-light" />
@@ -37,7 +37,7 @@ const Carousel = () => {
             <img
               className="d-block w-100"
               src="https://assets.epicurious.com/photos/58e2673b81339e10fcb0ceb2/16:9/w_1280,c_limit/working-parent-Grocery-List-03292017.jpg"
-              style={{ height: 600}}
+              style={{ height: 550}}
               alt="Second slide"
             />
           <MDBMask overlay="black-light" />
@@ -54,7 +54,7 @@ const Carousel = () => {
             <img
               className="d-block w-100"
               src="https://mantis.com/wp-content/uploads/2018/08/Share-Surplus-Vegetables-blog.jpg"
-              style={{ height: 600}}
+              style={{ height: 550}}
               alt="Third slide"
             />
           <MDBMask overlay="black-light" />
@@ -69,7 +69,7 @@ const Carousel = () => {
             <img
               className="d-block w-100"
               src="http://www.topfase.com.br/wp-content/uploads/2018/08/20161208_foodwaste_news_featured-1030x687.jpg"
-              style={{ height: 600}}
+              style={{  height: 550}}
               alt="Second slide"
             />
           <MDBMask overlay="black-strong" />

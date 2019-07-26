@@ -5,27 +5,37 @@ import {
   CardText,
   CardBody,
   CardTitle,
-  CardSubtitle,
   Button
 } from "reactstrap";
 
-const UserCard = (prop) => {
+
+const UserCard = prop => {
+  
   return (
-    <div className="user-card">
-      <Card>
+
+    <div >
+      <Card >
         <CardImg
           top
           width="100%"
-          src="https://steamuserimages-a.akamaihd.net/ugc/88218951569919284/E6EDFCD991421F636DC02DD43E30AFBAF27E1E79/"
+          src={prop.currentUser.image}
           alt="Card image cap"
           style={{width: 150, height: 200}}
         />
         <CardBody>
-          <CardTitle>{ prop.user.name }</CardTitle>
+          <CardTitle>My profile</CardTitle>
           <CardText>
-            { prop.user.userName }
+            {prop.currentUser.userName}
           </CardText>
-          <Button>this is a user</Button>
+          <CardText>
+          {prop.currentUser.name}
+          </CardText>
+          <CardText>
+          {prop.currentUser.email}
+          </CardText>
+          <Button>Save</Button>
+          <Button>Update</Button>
+          
         </CardBody>
       </Card>
     </div>

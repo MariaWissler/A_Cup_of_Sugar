@@ -4,6 +4,7 @@ import './index.css';
 import AppRoutes from './routes/AppRoutes';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
+//import {createStore} from 'redux;';
 
 ReactDOM.render(<AppRoutes />, document.getElementById('root'));
 
