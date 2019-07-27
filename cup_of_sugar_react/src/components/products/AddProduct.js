@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
 import axios from "../../utils/axiosInstance";
 import "./addproduct.css";
+import { getUser } from "../../utils/auth";
 
 export default class AddProduct extends Component {
   constructor(props) {
@@ -10,7 +11,7 @@ export default class AddProduct extends Component {
     this.state = {
       name: "",
       description: "",
-      availability: false,
+      availability: true,
       image: ""
     };
   }
@@ -39,13 +40,15 @@ export default class AddProduct extends Component {
   addProduct = e => {
     e.preventDefault();
     const { name, description, availability, image } = this.state;
+    const { _id: userId } = getUser();
+
     const formData = new FormData();
     formData.append('image', image, image.name)
     formData.append('name', name);
     formData.append('description', description);
     formData.append('availability', availability);
     formData.append('addressId', "e0fdc890-ab81-11e9-94a7-bd0274314a8b")
-
+    formData.append('userId', userId);
     
     axios
       .post("/api/products", formData)
