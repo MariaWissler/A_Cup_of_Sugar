@@ -4,7 +4,7 @@ import App from "../App";
 import ProductList from "../components/products/ProductList";
 import AddProduct from "../components/products/AddProduct";
 import UserProfile from "../components/users/UserProfile";
-import UserMessages from "../components/users/UserMessages";
+import ProductsRequested from "../components/products/ProductsRequested";
 import Navbar from "../Navbar";
 
 
@@ -18,7 +18,7 @@ export default class AppRoutes extends Component {
           <Route path="/products" component={ProductList} />
           <Route path="/userprofile" component={UserProfile} />
           <Route path="/addproduct" component={AddProduct} />
-          <Route path="/mymessages" component={UserMessages}/>
+          <Route path="/myrequests" component={ProductsRequested}/>
         </Switch>
       </Router>
     );

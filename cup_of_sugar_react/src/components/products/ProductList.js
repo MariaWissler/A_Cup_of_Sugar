@@ -24,11 +24,11 @@ export default class ProductList extends Component {
   }
 
   requestProduct = productId => {
-    const { _id } = getUser();
+    const { id } = getUser();
 
     axios
       .post(`/api/products/${productId}/requests`, {
-        userId: _id
+        userId: id
       })
       .then(() => {
         alert("request addedd");

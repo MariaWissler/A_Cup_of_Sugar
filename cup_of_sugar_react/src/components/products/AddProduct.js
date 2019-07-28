@@ -40,7 +40,7 @@ export default class AddProduct extends Component {
   addProduct = e => {
     e.preventDefault();
     const { name, description, availability, image } = this.state;
-    const { _id: userId } = getUser();
+    const { id: userId } = getUser();
 
     const formData = new FormData();
     formData.append('image', image, image.name)

@@ -108,8 +108,8 @@ class Navbar extends React.Component {
               My profile
             </Link>
 
-            <Link to="/userprofile" className="nav-link ">
-              My messages
+            <Link to="/myrequests" className="nav-link ">
+              My Requests
             </Link>
 
             <GoogleLogout

@@ -3,17 +3,11 @@ import { Button, Card, CardBody, CardImg, CardText, CardTitle } from "reactstrap
 import { getUser } from "../../utils/auth";
 
 class ProductCard extends Component {
-  // const requestProduct = event => {
-  //   const selectedProduct = event.target.getAttribute("data-productid"); // here lives the id for the product
-  //   console.log(event.target.getAttribute("data-productid"));
-  //   alert("This has been requested");
-  //   // get
-  //   // post
-  // }
+
 
   render() {
     const { product } = this.props;
-    const { _id: userId } = getUser();
+    const { id: userId } = getUser();
 
     return (
       <div className="product-card ">
