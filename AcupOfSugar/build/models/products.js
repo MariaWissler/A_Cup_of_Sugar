@@ -22,21 +22,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var uuid = require("uuid");
 var typegoose_1 = require("typegoose");
+var users_1 = require("./users");
 var Products = /** @class */ (function (_super) {
     __extends(Products, _super);
     function Products() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     __decorate([
-        typegoose_1.prop({ unique: true, default: uuid.v1() }),
-        __metadata("design:type", String)
-    ], Products.prototype, "_id", void 0);
-    __decorate([
         typegoose_1.prop({ required: true }),
         __metadata("design:type", String)
-    ], Products.prototype, "_addressId", void 0);
+    ], Products.prototype, "addressId", void 0);
     __decorate([
         typegoose_1.prop({ required: true }),
         __metadata("design:type", String)
@@ -51,8 +47,16 @@ var Products = /** @class */ (function (_super) {
     ], Products.prototype, "availability", void 0);
     __decorate([
         typegoose_1.prop({ required: true }),
-        __metadata("design:type", Uint8Array)
+        __metadata("design:type", String)
     ], Products.prototype, "image", void 0);
+    __decorate([
+        typegoose_1.prop({ ref: users_1.Users, required: true }),
+        __metadata("design:type", Object)
+    ], Products.prototype, "user", void 0);
+    __decorate([
+        typegoose_1.prop({ ref: users_1.Users }),
+        __metadata("design:type", Object)
+    ], Products.prototype, "requestedBy", void 0);
     return Products;
 }(typegoose_1.Typegoose));
 exports.Products = Products;

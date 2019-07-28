@@ -4,6 +4,20 @@ import { AddressController } from "../controllers/addressController";
 import { ProductController } from "../controllers/productController";
 import { CollectedProductsController } from "../controllers/productCollectionController";
 import { UserRatingsController } from "../controllers/userRatingsController";
+import * as multer from "multer";
+import { randomBytes } from 'crypto';
+import { MessageController } from "../controllers/messageController";
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => cb(null, './uploads'),
+    filename: (req, file, cb) => {
+        const fileSplit = file.originalname.split('.');
+        const ext = fileSplit[fileSplit.length  - 1];
+        const filename = `${randomBytes(8).toString('hex')}.${ext}`;
+        cb(null, filename)
+    }
+})
+const upload = multer({ storage });
 
 // app es parametro 
 export default (app)=>{
@@ -19,12 +33,18 @@ export default (app)=>{
     let productRouter = express.Router();
     let productCollectedRouter = express.Router();
     let userRateRouter = express.Router();
+    let messageRouter = express.Router();
 
     apiRoutes.use("/users",userRouter);
     apiRoutes.use("/addresses",addressRouter);
     apiRoutes.use("/products",productRouter);
     apiRoutes.use("/productscollected",productCollectedRouter);
     apiRoutes.use("/userratings",userRateRouter);
+    apiRoutes.use('/messages', messageRouter);
+    
+
+    //Define routes for messages 
+    messageRouter.post('/', MessageController.send)
 
     //Define routes for users
     userRouter.get('/', UserController.getUsers);
@@ -32,7 +52,10 @@ export default (app)=>{
     userRouter.post('/', UserController.createUser);
     userRouter.put('/:id', UserController.updateUser);
     userRouter.delete('/:id', UserController.removeUser);
- 
+    userRouter.get('/email/:email', UserController.getByEmail);
+    userRouter.get('/:id/messages', UserController.getMesssages)
+
+
     //Define routes for address
     addressRouter.get('/', AddressController.getAddress);
     addressRouter.get('/:id', AddressController.getAddressById);
@@ -43,9 +66,11 @@ export default (app)=>{
     //Define routes for product
     productRouter.get('/', ProductController.getProducts);
     productRouter.get('/:id', ProductController.getProductById);
-    productRouter.post('/', ProductController.createProduct);
+    productRouter.post('/', upload.single('image'), ProductController.createProduct);
     productRouter.put('/:id', ProductController.updateProduct);
     productRouter.delete('/:id', ProductController.removeProduct);
+    productRouter.post('/:id/requests', ProductController.addRequest);
+    productRouter.get('/:userId/requests', ProductController.getRequestedProducts)
 
     //Define routes for Collected Products
     productCollectedRouter.get('/', CollectedProductsController.getCollectedProducts);

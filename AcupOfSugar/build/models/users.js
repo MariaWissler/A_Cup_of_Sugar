@@ -22,17 +22,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var uuid = require("uuid");
 var typegoose_1 = require("typegoose");
+var message_1 = require("./message");
 var Users = /** @class */ (function (_super) {
     __extends(Users, _super);
     function Users() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    __decorate([
-        typegoose_1.prop({ unique: true, default: uuid.v1() }),
-        __metadata("design:type", String)
-    ], Users.prototype, "_id", void 0);
     __decorate([
         typegoose_1.prop({ required: true }),
         __metadata("design:type", String)
@@ -45,6 +41,14 @@ var Users = /** @class */ (function (_super) {
         typegoose_1.prop({ required: true }),
         __metadata("design:type", String)
     ], Users.prototype, "email", void 0);
+    __decorate([
+        typegoose_1.prop({}),
+        __metadata("design:type", String)
+    ], Users.prototype, "image", void 0);
+    __decorate([
+        typegoose_1.arrayProp({ itemsRef: message_1.Message }),
+        __metadata("design:type", Array)
+    ], Users.prototype, "messages", void 0);
     return Users;
 }(typegoose_1.Typegoose));
 exports.Users = Users;

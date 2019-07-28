@@ -22,7 +22,9 @@ app.use(cookieParser());
 app.use(logger('dev'));
 app.use(helmet());
 app.use(cors());
- 
+
+app.use('/uploads', express.static('uploads'))
+
 router(app);
 // mandar todas las rutas
 

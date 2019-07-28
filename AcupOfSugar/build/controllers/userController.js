@@ -41,11 +41,11 @@ var UserController = /** @class */ (function () {
     }
     UserController.createUser = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, userName, name, email, newUser, error_1;
+            var _a, userName, name, email, image, newUser, error_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        _a = request.body, userName = _a.userName, name = _a.name, email = _a.email;
+                        _a = request.body, userName = _a.userName, name = _a.name, email = _a.email, image = _a.image;
                         if (!userName || !email || !name) {
                             return [2 /*return*/, response.status(422).send({
                                     message: "Please provide email, username & name"
@@ -55,6 +55,7 @@ var UserController = /** @class */ (function () {
                         newUser.name = name;
                         newUser.userName = userName;
                         newUser.email = email;
+                        newUser.image = image;
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 3, , 4]);
@@ -62,6 +63,7 @@ var UserController = /** @class */ (function () {
                     case 2:
                         _b.sent();
                         response.send({
+                            image: newUser.image,
                             userName: newUser.userName,
                             email: newUser.email,
                             name: newUser.name,
@@ -72,12 +74,21 @@ var UserController = /** @class */ (function () {
                         error_1 = _b.sent();
                         console.log(error_1.message);
                         response.status(500).send({
-                            message: 'Server ecountered an error. Please try again'
+                            message: "Server ecountered an error. Please try again"
                         });
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
             });
+        });
+    };
+    UserController.getByEmail = function (request, response) {
+        var emailParameter = request.params.email;
+        var userFound = users_1.default.find({ email: emailParameter }, function (error, user) {
+            if (error) {
+                response.status(500).json({ error: error });
+            }
+            response.status(200).json({ user: user });
         });
     };
     UserController.getUsers = function (request, response) {
@@ -114,8 +125,39 @@ var UserController = /** @class */ (function () {
                     message: "Unable to Remove User"
                 });
             }
-            console.log('I will not run after error ');
+            console.log("I will not run after error ");
             response.status(200).json({ userToRemove: userToRemove });
+        });
+    };
+    UserController.getMesssages = function (request, response) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userId, user, error_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        userId = request.params.id;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, users_1.default.findById(userId).populate("messages")];
+                    case 2:
+                        user = _a.sent();
+                        if (!user) {
+                            return [2 /*return*/, response.status(404).json({
+                                    message: "User not found"
+                                })];
+                        }
+                        response.send({ messages: user.messages });
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_2 = _a.sent();
+                        response.status(500).json({
+                            message: 'Failed to get messages'
+                        });
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
         });
     };
     return UserController;

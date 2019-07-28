@@ -36,34 +36,45 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var products_1 = require("../models/products");
-var fs = require("fs");
+var users_1 = require("../models/users");
 var ProductController = /** @class */ (function () {
     function ProductController() {
     }
     ProductController.createProduct = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, _addressId, name, description, image, availability, newProduct, error_1;
+            var file, _a, addressId, name, description, availability, userId, user, newProduct, error_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        _a = request.body, _addressId = _a._addressId, name = _a.name, description = _a.description, image = _a.image, availability = _a.availability;
-                        image = "./img/chewy.jpg";
-                        if (!_addressId || !name || !description || !image || !availability) {
-                            return [2 /*return*/, response.status(422).send({
-                                    message: 'Please provide complete product details'
+                        file = request.file;
+                        _a = request.body, addressId = _a.addressId, name = _a.name, description = _a.description, availability = _a.availability, userId = _a.userId;
+                        console.log(request.body);
+                        if (!addressId || !name || !description || !availability || !userId) {
+                            return [2 /*return*/, response.status(400).send({
+                                    message: "Please provide complete product details"
                                 })];
                         }
-                        newProduct = new products_1.default();
-                        newProduct._addressId = _addressId;
-                        newProduct.name = name;
-                        newProduct.description = description;
-                        newProduct.image = fs.readFileSync(image);
-                        newProduct.availability = availability;
                         _b.label = 1;
                     case 1:
-                        _b.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, newProduct.save()];
+                        _b.trys.push([1, 4, , 5]);
+                        return [4 /*yield*/, users_1.default.findById(userId)];
                     case 2:
+                        user = _b.sent();
+                        if (!user) {
+                            return [2 /*return*/, response.status(404).json({
+                                    message: "User with ID '" + userId + "' not found"
+                                })];
+                        }
+                        newProduct = new products_1.default({
+                            addressId: addressId,
+                            name: name,
+                            description: description,
+                            availability: availability,
+                            image: file.path,
+                            user: user
+                        });
+                        return [4 /*yield*/, newProduct.save()];
+                    case 3:
                         _b.sent();
                         response.send({
                             addressId: newProduct.addressId,
@@ -72,41 +83,69 @@ var ProductController = /** @class */ (function () {
                             image: newProduct.image,
                             availability: newProduct.availability
                         });
-                        return [3 /*break*/, 4];
-                    case 3:
+                        return [3 /*break*/, 5];
+                    case 4:
                         error_1 = _b.sent();
                         console.log(error_1.message);
                         response.status(500).send({
-                            message: 'Server ecountered an error. Please try again'
+                            message: "Server ecountered an error. Please try again"
                         });
+                        return [3 /*break*/, 5];
+                    case 5: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ProductController.getProducts = function (request, response) {
+        return __awaiter(this, void 0, void 0, function () {
+            var products, error_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, products_1.default.find({ availability: true }).populate("user")];
+                    case 1:
+                        products = _a.sent();
+                        response.json({ products: products });
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_2 = _a.sent();
+                        response.status(500).send("Products not found");
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ProductController.getProductById = function (request, response) {
+        return __awaiter(this, void 0, void 0, function () {
+            var productId, product, error_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        productId = request.params.id;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, products_1.default.findById(productId).populate("user")];
+                    case 2:
+                        product = _a.sent();
+                        response.json({ product: product });
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_3 = _a.sent();
+                        response.status(500).send("Unable to find Product");
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
             });
         });
     };
-    ProductController.getProducts = function (request, response) {
-        products_1.default.find(function (error, products) {
-            if (error) {
-                response.status(500).send('Product not Found');
-            }
-            response.json({ products: products });
-        });
-    };
-    ProductController.getProductById = function (request, response) {
-        var productId = request.params.id;
-        products_1.default.findById(productId, function (error, product) {
-            if (error) {
-                response.status(500).send('Unable to find Product');
-            }
-            response.status(200).json({ product: product });
-        });
-    };
     ProductController.updateProduct = function (request, response) {
         var productId = request.params.id;
         products_1.default.findByIdAndUpdate(productId, request.body, function (error, product) {
             if (error) {
-                response.status(500).json('Unable to Update Product Info');
+                response.status(500).json("Unable to Update Product Info");
             }
             response.status(200).json({ product: product });
         });
@@ -115,9 +154,77 @@ var ProductController = /** @class */ (function () {
         var productId = request.params.id;
         products_1.default.findByIdAndRemove(productId, function (error, productToRemove) {
             if (error) {
-                response.status(500).json('Unable to Remove User');
+                response.status(500).json("Unable to Remove User");
             }
             response.status(200).json({ productToRemove: productToRemove });
+        });
+    };
+    ProductController.addRequest = function (request, response) {
+        return __awaiter(this, void 0, void 0, function () {
+            var productId, userId, user, product, error_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        productId = request.params.id;
+                        userId = request.body.userId;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 5, , 6]);
+                        return [4 /*yield*/, users_1.default.findById(userId)];
+                    case 2:
+                        user = _a.sent();
+                        if (!user) {
+                            return [2 /*return*/, response.status(404).json({
+                                    message: "User with ID '" + userId + "' not found"
+                                })];
+                        }
+                        return [4 /*yield*/, products_1.default.findById(productId).populate("user")];
+                    case 3:
+                        product = _a.sent();
+                        if (!product) {
+                            return [2 /*return*/, response.status(404).json({
+                                    message: "Product with ID '" + productId + "' not found"
+                                })];
+                        }
+                        product.availability = false;
+                        product.requestedBy = user;
+                        return [4 /*yield*/, product.save()];
+                    case 4:
+                        _a.sent();
+                        response.send({ message: "Request added successfull" });
+                        return [3 /*break*/, 6];
+                    case 5:
+                        error_4 = _a.sent();
+                        response.status(500).json({
+                            message: error_4.message
+                        });
+                        return [3 /*break*/, 6];
+                    case 6: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ProductController.getRequestedProducts = function (request, response) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userId, currentUserProducts, error_5;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        userId = request.params.id;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, products_1.default.find({ userId: userId, availability: false }).populate("requestedBy")];
+                    case 2:
+                        currentUserProducts = _a.sent();
+                        return [2 /*return*/, response.json({ currentUserProducts: currentUserProducts })];
+                    case 3:
+                        error_5 = _a.sent();
+                        response.status(500).send("Products not found");
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
         });
     };
     return ProductController;

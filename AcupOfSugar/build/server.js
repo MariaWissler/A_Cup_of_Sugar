@@ -20,6 +20,7 @@ app.use(cookieParser());
 app.use(logger('dev'));
 app.use(helmet());
 app.use(cors());
+app.use('/uploads', express.static('uploads'));
 v1_1.default(app);
 // mandar todas las rutas
 // nueva variable 
