@@ -4,11 +4,11 @@ import { prop, Typegoose, ModelType, InstanceType, Ref } from 'typegoose';
 import {Users} from "./users";
 
 export class Addresses extends Typegoose{
-   @prop({unique:true,default:uuid.v1()})
-   _id:String;
+   // @prop({unique:true,default:uuid.v1()})
+   // _id:String;
    
    @prop({required:true})
-   _userId:String;
+   userId:String;
    
    @prop({required:true})
    street:String;

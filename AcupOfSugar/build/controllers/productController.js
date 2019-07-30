@@ -103,7 +103,7 @@ var ProductController = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, products_1.default.find({ availability: true }).populate("user")];
+                        return [4 /*yield*/, products_1.default.find({ availability: true }).populate("messages")];
                     case 1:
                         products = _a.sent();
                         response.json({ products: products });
@@ -127,7 +127,7 @@ var ProductController = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, products_1.default.findById(productId).populate("user")];
+                        return [4 /*yield*/, products_1.default.findById(productId).populate("user", "messages")];
                     case 2:
                         product = _a.sent();
                         response.json({ product: product });
@@ -178,7 +178,7 @@ var ProductController = /** @class */ (function () {
                                     message: "User with ID '" + userId + "' not found"
                                 })];
                         }
-                        return [4 /*yield*/, products_1.default.findById(productId).populate("user")];
+                        return [4 /*yield*/, products_1.default.findById(productId)];
                     case 3:
                         product = _a.sent();
                         if (!product) {
@@ -214,7 +214,7 @@ var ProductController = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, products_1.default.find({ userId: userId, availability: false }).populate("requestedBy")];
+                        return [4 /*yield*/, products_1.default.find({ userId: userId, availability: false })];
                     case 2:
                         currentUserProducts = _a.sent();
                         return [2 /*return*/, response.json({ currentUserProducts: currentUserProducts })];

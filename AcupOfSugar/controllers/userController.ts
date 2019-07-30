@@ -90,22 +90,5 @@ export class UserController {
     });
   }
 
-  static async getMesssages(request, response) {
-    const userId = request.params.id;
-
-    try {
-      const user = await UserModel.findById(userId).populate("messages");
-      if (!user) {
-        return response.status(404).json({
-          message: "User not found"
-        });
-      }
-
-      response.send({ messages: user.messages });
-    } catch (error) {
-      response.status(500).json({
-        message: 'Failed to get messages'
-      })
-    }
-  }
+  
 }

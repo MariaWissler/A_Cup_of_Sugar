@@ -37,54 +37,92 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var message_1 = require("../models/message");
 var users_1 = require("../models/users");
+var products_1 = require("../models/products");
 var MessageController = /** @class */ (function () {
     function MessageController() {
     }
     MessageController.send = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, from, to, body, sender, recipient, message, error_1;
+            var _a, from, to, body, productId, sender, recipient, product, message, error_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        _a = request.body, from = _a.from, to = _a.to, body = _a.body;
-                        if (!from || !to || !body) {
+                        _a = request.body, from = _a.from, to = _a.to, body = _a.body, productId = _a.productId;
+                        if (!from || !to || !body || !productId) {
                             return [2 /*return*/, response.status(400).json({
-                                    message: "Please provide 'from, to, body' in request"
+                                    message: "Please provide 'from, to, body, productId' in request"
                                 })];
                         }
                         _b.label = 1;
                     case 1:
-                        _b.trys.push([1, 7, , 8]);
+                        _b.trys.push([1, 8, , 9]);
                         return [4 /*yield*/, users_1.default.findById(from)];
                     case 2:
                         sender = _b.sent();
                         return [4 /*yield*/, users_1.default.findById(to)];
                     case 3:
                         recipient = _b.sent();
-                        message = message_1.default();
+                        return [4 /*yield*/, products_1.default.findById(productId)];
+                    case 4:
+                        product = _b.sent();
+                        message = message_1.default().populate("productChat");
                         message.body = body;
                         message.from = sender;
                         message.to = recipient;
+                        message.product = product;
+                        console.log('message.product', message.product);
                         return [4 /*yield*/, message.save()];
-                    case 4:
+                    case 5:
                         _b.sent();
                         sender.messages.push(message);
                         recipient.messages.push(message);
                         return [4 /*yield*/, sender.save()];
-                    case 5:
+                    case 6:
                         _b.sent();
                         return [4 /*yield*/, recipient.save()];
-                    case 6:
+                    case 7:
                         _b.sent();
                         response.send({
                             message: "Message sent successfully"
                         });
-                        return [3 /*break*/, 8];
-                    case 7:
+                        return [3 /*break*/, 9];
+                    case 8:
                         error_1 = _b.sent();
                         console.log(error_1.message);
-                        return [3 /*break*/, 8];
-                    case 8: return [2 /*return*/];
+                        return [3 /*break*/, 9];
+                    case 9: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    MessageController.getMesssagesByProduct = function (request, response) {
+        return __awaiter(this, void 0, void 0, function () {
+            var productId, messageByProduct, error_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        productId = request.params.id;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, message_1.default.find({ product: productId })];
+                    case 2:
+                        messageByProduct = _a.sent();
+                        if (!messageByProduct) {
+                            return [2 /*return*/, response.status(404).json({
+                                    messageByProduct: "not found"
+                                })];
+                        }
+                        messageByProduct.isRead = true;
+                        response.send(messageByProduct);
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_2 = _a.sent();
+                        response.status(500).json({
+                            message: 'Failed to get messages'
+                        });
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });

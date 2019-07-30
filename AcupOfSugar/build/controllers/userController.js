@@ -129,37 +129,6 @@ var UserController = /** @class */ (function () {
             response.status(200).json({ userToRemove: userToRemove });
         });
     };
-    UserController.getMesssages = function (request, response) {
-        return __awaiter(this, void 0, void 0, function () {
-            var userId, user, error_2;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        userId = request.params.id;
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, users_1.default.findById(userId).populate("messages")];
-                    case 2:
-                        user = _a.sent();
-                        if (!user) {
-                            return [2 /*return*/, response.status(404).json({
-                                    message: "User not found"
-                                })];
-                        }
-                        response.send({ messages: user.messages });
-                        return [3 /*break*/, 4];
-                    case 3:
-                        error_2 = _a.sent();
-                        response.status(500).json({
-                            message: 'Failed to get messages'
-                        });
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
-                }
-            });
-        });
-    };
     return UserController;
 }());
 exports.UserController = UserController;

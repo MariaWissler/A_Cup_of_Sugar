@@ -49,9 +49,7 @@ export class ProductController {
 
   static async getProducts(request, response) {
     try {
-      const products = await ProductModel.find({ availability: true }).populate(
-        "user"
-      );
+      const products = await ProductModel.find({ availability: true }).populate("messages");
       response.json({ products });
     } catch (error) {
       response.status(500).send("Products not found");
@@ -68,7 +66,7 @@ export class ProductController {
   static async getProductById(request, response) {
     var productId = request.params.id;
     try {
-      const product = await ProductModel.findById(productId).populate("user");
+      const product = await ProductModel.findById(productId).populate("user", "messages");
       response.json({ product });
     } catch (error) {
       response.status(500).send("Unable to find Product");
@@ -119,7 +117,7 @@ export class ProductController {
         });
       }
 
-      const product = await ProductModel.findById(productId).populate("user");
+      const product = await ProductModel.findById(productId);
       if (!product) {
         return response.status(404).json({
           message: `Product with ID '${productId}' not found`
@@ -144,9 +142,7 @@ export class ProductController {
     const userId = request.params.id;
 
     try {
-      const currentUserProducts = await ProductModel.find({userId, availability: false }).populate(
-        "requestedBy"
-      ); // find products posted by current user
+      const currentUserProducts = await ProductModel.find({userId, availability: false }); 
       
       return response.json({ currentUserProducts });
     } catch (error) {

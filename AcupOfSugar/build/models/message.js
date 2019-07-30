@@ -24,6 +24,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var typegoose_1 = require("typegoose");
 var users_1 = require("./users");
+var products_1 = require("./products");
 var Message = /** @class */ (function (_super) {
     __extends(Message, _super);
     function Message() {
@@ -45,6 +46,10 @@ var Message = /** @class */ (function (_super) {
         typegoose_1.prop({ ref: users_1.Users, required: true }),
         __metadata("design:type", Object)
     ], Message.prototype, "to", void 0);
+    __decorate([
+        typegoose_1.prop({ ref: products_1.Products, required: true }),
+        __metadata("design:type", Object)
+    ], Message.prototype, "product", void 0);
     return Message;
 }(typegoose_1.Typegoose));
 exports.Message = Message;

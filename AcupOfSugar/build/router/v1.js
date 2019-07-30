@@ -37,9 +37,10 @@ exports.default = (function (app) {
     apiRoutes.use("/products", productRouter);
     apiRoutes.use("/productscollected", productCollectedRouter);
     apiRoutes.use("/userratings", userRateRouter);
-    apiRoutes.use('/messages', messageRouter);
+    apiRoutes.use("/messages", messageRouter);
     //Define routes for messages 
     messageRouter.post('/', messageController_1.MessageController.send);
+    messageRouter.get('/:id', messageController_1.MessageController.getMesssagesByProduct);
     //Define routes for users
     userRouter.get('/', userController_1.UserController.getUsers);
     userRouter.get('/:id', userController_1.UserController.getUserById);
@@ -47,7 +48,6 @@ exports.default = (function (app) {
     userRouter.put('/:id', userController_1.UserController.updateUser);
     userRouter.delete('/:id', userController_1.UserController.removeUser);
     userRouter.get('/email/:email', userController_1.UserController.getByEmail);
-    userRouter.get('/:id/messages', userController_1.UserController.getMesssages);
     //Define routes for address
     addressRouter.get('/', addressController_1.AddressController.getAddress);
     addressRouter.get('/:id', addressController_1.AddressController.getAddressById);

@@ -22,7 +22,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var uuid = require("uuid");
 var typegoose_1 = require("typegoose");
 var Addresses = /** @class */ (function (_super) {
     __extends(Addresses, _super);
@@ -30,13 +29,9 @@ var Addresses = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     __decorate([
-        typegoose_1.prop({ unique: true, default: uuid.v1() }),
-        __metadata("design:type", String)
-    ], Addresses.prototype, "_id", void 0);
-    __decorate([
         typegoose_1.prop({ required: true }),
         __metadata("design:type", String)
-    ], Addresses.prototype, "_userId", void 0);
+    ], Addresses.prototype, "userId", void 0);
     __decorate([
         typegoose_1.prop({ required: true }),
         __metadata("design:type", String)

@@ -1,5 +1,6 @@
 import { prop, Ref, Typegoose } from "typegoose";
 import { Users } from "./users";
+import { Message } from "./message";
 
 export class Products extends Typegoose {
   @prop({ required: true })
@@ -22,6 +23,9 @@ export class Products extends Typegoose {
 
   @prop({ ref: Users })
   requestedBy: Ref<Users>;
+
+  @prop({ ref: Message })
+  messages: Ref<Message>;
 }
 
 const ProductModel = new Products().getModelForClass(Products);

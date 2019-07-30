@@ -4,8 +4,8 @@ import { prop, staticMethod, instanceMethod, Typegoose, ModelType, InstanceType,
 import {Products} from "./products";
 
 export class CollectedProducts extends Typegoose{
-   @prop({unique:true,default:uuid.v1()})
-_id:String;
+//    @prop({unique:true,default:uuid.v1()})
+// _id:String;
 
    @prop({required:true})
    productId:String;

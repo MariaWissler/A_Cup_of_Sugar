@@ -40,11 +40,12 @@ export default (app)=>{
     apiRoutes.use("/products",productRouter);
     apiRoutes.use("/productscollected",productCollectedRouter);
     apiRoutes.use("/userratings",userRateRouter);
-    apiRoutes.use('/messages', messageRouter);
+    apiRoutes.use("/messages", messageRouter);
     
 
     //Define routes for messages 
     messageRouter.post('/', MessageController.send)
+    messageRouter.get('/:id', MessageController.getMesssagesByProduct)
 
     //Define routes for users
     userRouter.get('/', UserController.getUsers);
@@ -53,7 +54,7 @@ export default (app)=>{
     userRouter.put('/:id', UserController.updateUser);
     userRouter.delete('/:id', UserController.removeUser);
     userRouter.get('/email/:email', UserController.getByEmail);
-    userRouter.get('/:id/messages', UserController.getMesssages)
+    
 
 
     //Define routes for address
@@ -71,6 +72,7 @@ export default (app)=>{
     productRouter.delete('/:id', ProductController.removeProduct);
     productRouter.post('/:id/requests', ProductController.addRequest);
     productRouter.get('/:userId/requests', ProductController.getRequestedProducts)
+    
 
     //Define routes for Collected Products
     productCollectedRouter.get('/', CollectedProductsController.getCollectedProducts);
