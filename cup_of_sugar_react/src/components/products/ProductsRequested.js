@@ -17,8 +17,8 @@ export default class ProductsRequested extends Component {
        .get(`/api/products/${userId}/requests`)
        .then(response => {         
          this.setState({ myrequests:response.data.currentUserProducts});
-         const{ myrequests } = this.state;
-         console.log(myrequests);
+         
+         console.log({myrequests:response.data.currentUserProducts});
        })
        .catch(error => {
          this.setState({ error: error.message });

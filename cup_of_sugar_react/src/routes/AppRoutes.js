@@ -6,6 +6,7 @@ import AddProduct from "../components/products/AddProduct";
 import UserProfile from "../components/users/UserProfile";
 import ProductsRequested from "../components/products/ProductsRequested";
 import Navbar from "../Navbar";
+import MyMessages from "../components/users/MyMessages";
 
 
 export default class AppRoutes extends Component {
@@ -19,6 +20,7 @@ export default class AppRoutes extends Component {
           <Route path="/userprofile" component={UserProfile} />
           <Route path="/addproduct" component={AddProduct} />
           <Route path="/myrequests" component={ProductsRequested}/>
+          <Route path="/mymessages" component={MyMessages}/>
         </Switch>
       </Router>
     );

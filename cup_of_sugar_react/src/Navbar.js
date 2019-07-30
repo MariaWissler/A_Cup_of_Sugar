@@ -112,6 +112,11 @@ class Navbar extends React.Component {
               My Requests
             </Link>
 
+
+            <Link to="/mymessages" className="nav-link ">
+              Messages
+            </Link>
+
             <GoogleLogout
               buttonText="Logout"
               onLogoutSuccess={this.handleLogout}

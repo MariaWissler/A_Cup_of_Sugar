@@ -25,7 +25,7 @@ export default class ProductList extends Component {
 
   requestProduct = productId => {
     const { id } = getUser();
-
+    
     axios
       .post(`/api/products/${productId}/requests`, {
         userId: id

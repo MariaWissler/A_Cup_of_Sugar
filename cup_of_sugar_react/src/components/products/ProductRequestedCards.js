@@ -9,7 +9,9 @@ import {
   InputGroup,
   InputGroupAddon,
   Input,
-  Form
+  Form,
+  FormGroup,
+  Label
 } from "reactstrap";
 import axios from "../../utils/axiosInstance";
 import { getUser } from "../../utils/auth";
@@ -20,10 +22,27 @@ export default class ProductRequestedCard extends Component {
 
     this.state = {
       message: "",
-      response: "",
+      mymessages: [],
       error: ""
     };
   }
+  
+  componentDidMount() {
+    const { request } = this.props;
+       
+       axios
+         .get("/api/messages/" + request._id)
+         .then(response => {
+         //alert("You have messages!");
+         this.setState({ mymessages: response.data});
+         //const{ mymessages } = this.state;
+         console.log({mymessages: response.data.messages});
+         })
+         .catch(error => {
+            this.setState({ error: error.message });
+          });
+      }
+
 
   //we need a function to handleChange and message sent
   handleChange = e => {
@@ -34,6 +53,9 @@ export default class ProductRequestedCard extends Component {
   sendMessage = (e, recipient) => {
     e.preventDefault();
     const sender = getUser().id;
+    const { request } = this.props;
+
+    
 
     const { message } = this.state;
     if (!message) return;
@@ -42,15 +64,34 @@ export default class ProductRequestedCard extends Component {
       .post("/api/messages", {
         from: sender,
         to: recipient._id,
-        body: message
+        body: message,
+        productId: request._id
       })
-      .then(() => alert("msg sent successfully"))
-      .catch(() => alert("failed to send message"));
+      .then(() => {
+        alert("msg sent successfully");
+      
+        axios
+    
+        .get("/api/messages/" + request._id)
+        .then(response => {
+        //alert("You have messages!");
+        this.setState({ mymessages: response.data});
+        //const{ mymessages } = this.state;
+        })
+        .catch(error => {
+           this.setState({ error: error.message });
+         });
+      })
+      .catch(() =>{alert("failed to send message");});
   };
+
 
   render() {
     const { request } = this.props;
-    //const { id: userId } = getUser();
+    const { mymessages } = this.props;
+    
+    const { id: userId } = getUser();
+   
 
     return (
       <div className="product-card ">
@@ -64,10 +105,15 @@ export default class ProductRequestedCard extends Component {
           />
           <CardBody>
             <CardTitle>Your requests</CardTitle>
-            <CardText>Requested By: {request.requestedBy.name}</CardText>
-            <CardText>Your Offer: {request.name}</CardText>
-            <CardText>Send a message:</CardText>
-
+            { request.requestedBy._id !== userId ?(
+               <CardText>Requested By: {request.requestedBy.name}
+               </CardText>
+            ):(
+              <CardText>Requested By: Me</CardText>
+            )}
+            <CardText>Product: {request.name}</CardText>
+            <CardText>Send a messsage:</CardText>
+            
             <Form onSubmit={e => this.sendMessage(e, request.requestedBy)}>
               <InputGroup>
                 <Input
@@ -80,6 +126,17 @@ export default class ProductRequestedCard extends Component {
                 </InputGroupAddon>
               </InputGroup>
             </Form>
+            <CardText>Conversation:</CardText>
+           
+            
+            
+              {
+                this.state.mymessages.map(( message, index )=> (
+                <CardText type="textarea">{message.body}</CardText>
+                ))
+              }
+              
+            
           </CardBody>
         </Card>
       </div>
