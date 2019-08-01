@@ -1,22 +1,24 @@
 .App {
   text-align: center !important;
-  font-family: 'Permanent Marker', cursive;
+  font-family: 'Vollkorn', serif ;
   display: flex;
   flex-flow: column;
   height: 90vh !important;
+  
  
 }
 
 .app-title {
   align-content: center !important;
-  background-color:#97CC04;
-
+  background-color:#83B799;
+  height: 75px !important;
 
 }
 
 .join-community{
   color: white;
   padding: 2%;
+  font-family: 'Forum', cursive !important;
 }
 
 

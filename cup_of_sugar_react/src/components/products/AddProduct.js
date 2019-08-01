@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
 import axios from "../../utils/axiosInstance";
-import "./addproduct.css";
 import { getUser } from "../../utils/auth";
 
 export default class AddProduct extends Component {
@@ -12,8 +11,12 @@ export default class AddProduct extends Component {
       name: "",
       description: "",
       availability: true,
-      image: ""
+      image: "",
+      fileInputKey: Date.now(),
+      address: ""
     };
+
+    this.fileInput = React.createRef();
   }
 
   handleChange = e => {
@@ -21,7 +24,7 @@ export default class AddProduct extends Component {
     let value = "";
 
     console.log(elem.files);
-    
+
     switch (elem.type) {
       case "checkbox":
         value = elem.checked;
@@ -39,17 +42,17 @@ export default class AddProduct extends Component {
 
   addProduct = e => {
     e.preventDefault();
-    const { name, description, availability, image } = this.state;
+    const { name, description, availability, image, address} = this.state;
     const { id: userId } = getUser();
 
     const formData = new FormData();
-    formData.append('image', image, image.name)
-    formData.append('name', name);
-    formData.append('description', description);
-    formData.append('availability', availability);
-    formData.append('addressId', "e0fdc890-ab81-11e9-94a7-bd0274314a8b")
-    formData.append('userId', userId);
-    
+    formData.append("image", image, image.name);
+    formData.append("name", name);
+    formData.append("description", description);
+    formData.append("availability", availability);
+    formData.append("addressId", address);
+    formData.append("userId", userId);
+
     axios
       .post("/api/products", formData)
       .then(response => {
@@ -57,46 +60,84 @@ export default class AddProduct extends Component {
         alert("proudct added successfully");
       })
       .catch(() => alert("something went wrong"));
+
+    // call setState and initialize/set all values in state to be empty string
+    this.setState({
+      name: "",
+      description: "",
+      availability: true,
+      image: "",
+      fileInputKey: Date.now(),
+      address: ""
+    });
   };
 
   render() {
     return (
-      <div className="form">
-        <h1>Add a product</h1>
+      <div className="form-addproduct">
         <Form onSubmit={this.addProduct}>
+        <h1 className="add-product-title">
+          Welcome to Sharing!
+          </h1>
           <FormGroup>
-            <Label for="name">Name</Label>
+
+            <Label for="name">
+              <i class="fas fa-carrot" />
+              Product
+            </Label>
             <Input
               id="name"
               name="name"
               value={this.state.name}
               onChange={this.handleChange}
-              placeholder="with a placeholder"
+              placeholder="What are you sharing today?"
             />
           </FormGroup>
 
           <FormGroup>
-            <Label for="description">Description</Label>
+            <Label for="description">
+              <i class="fas fa-pencil-alt" />
+              Description
+            </Label>
             <Input
               type="textarea"
               name="description"
               value={this.state.description}
               onChange={this.handleChange}
               id="description"
+              placeholder="Just a little bit about it"
             />
           </FormGroup>
 
           <FormGroup>
-            <Label for="exampleFile">File</Label>
+            <Label for="address">
+              <i class="fas fa-hands" />
+              Pick Up Area:
+            </Label>
+            <Input
+              id="address"
+              name="address"
+              value={this.state.address}
+              onChange={this.handleChange}
+              placeholder="Just your neighborhood"
+            />
+          </FormGroup>
+
+          <FormGroup>
+            <Label for="exampleFile">
+              <i class="fas fa-camera-retro" />
+              File
+            </Label>
             <Input
               type="file"
               onChange={this.handleChange}
               name="image"
+              key={this.state.fileInputKey}
               id="exampleFile"
             />
             <FormText color="muted">
-              This is some placeholder block-level help text for the above
-              input. It's a bit lighter and easily wraps to a new line.
+              Please submit and image of your product so others now what you are
+              sharing!
             </FormText>
           </FormGroup>
 
@@ -107,12 +148,20 @@ export default class AddProduct extends Component {
                 type="checkbox"
                 name="availability"
                 onChange={this.handleChange}
-              />{" "}
+              />
               Available
             </Label>
           </FormGroup>
           <Button>Submit</Button>
         </Form>
+        <div className="people-fridge">
+          <img src="https://i.ytimg.com/vi/OMnRRNIjw6Y/maxresdefault.jpg"
+            style={{ height: 420, width: 650 }}/>
+            <p className="comment">
+              Did you know? Many countries have created a community fridge within their neighboords!
+    
+            </p>
+          </div>
       </div>
     );
   }

@@ -1,14 +1,78 @@
 .navbar-div{
-    background-color: #ffff3d !important;
+    background-color: rgb(253, 231, 105) !important;
     padding: .5%;
-    font-family: 'Permanent Marker', cursive;
+    font-family: 'Vollkorn', serif ;
     font-size: 1.1em;
     
-}
-.nav-link{
-    color: green !important;
     
 }
+.fas{
+   margin-right: 5px !important;
+}
+
+.link-home{
+    color: white !important;
+    margin-left: 35px !important;
+    margin-right: 220px;
+    font-family: 'Forum', cursive !important;
+}
+
+.nav-link:before{
+    text-decoration: underline;
+    color: #601407 !important;
+    position: absolute;
+    visibility: hidden;
+    margin-right: 10px;
+    font-family: 'Forum', cursive !important;
+    
+}
+
+.nav-link{
+    color: #601407 !important;
+    margin-right: 10px;
+    font-family: 'Forum', cursive !important;
+    text-decoration: none;
+   
+}
+
+.nav-link:hover{
+    color:  ivory;
+    border-bottom: 4px solid ivory;
+}
+
+.logout {
+    height: 45px;
+    width: 100px;
+    font-family: 'Forum', cursive !important;
+    color: #601407 !important;
+    font-size: 16px !important;
+    margin-left: 10px !important;
+    background-color: rgba(255, 255, 240, 0.863)
+    
+}
+
+.signin{
+    height: 45px;
+    width: flex;
+    font-family: 'Forum', cursive !important;
+    color: #601407 !important;
+    font-size: 16px !important;
+    margin-left: 1035px !important;
+    background-color: rgba(255, 255, 240, 0.863)
+    
+}
+
+
+
+
+
+
+.svg {
+    width: 10 !important;
+    height: 10 !important; 
+}
+
+
 
 
 

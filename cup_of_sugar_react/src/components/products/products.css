@@ -1,14 +1,193 @@
 .products {
     display: flex;
     flex-wrap: wrap;
+    align-items: center; 
+    justify-content: center;
 }
 
- .product-card {
-    padding: 10px;
+.product-card{
+    display: flex;  
+    min-height: 4vh;
+    flex: 0 0 230px;
+    width: 35vh; 
+    align-items: center; 
+    justify-content: center;
+    margin-left: 10px;
+    margin-right: 10px !important;
+    margin-top: 4px;
+    margin-bottom: 3px;
+
+}
+
+
+.card:hover {
+    border-radius: 0px !important;
+    box-shadow: 0 4px 10px 0 rgba(245, 249, 131, 0.331), 0 4px 15px 0 rgba(243, 169, 59, 0.269);
+  }
+ 
+
+.offer-text{
+  
+    margin-top: 0px;
+    margin-bottom: 3px;
+    font-size: 15px;  
+    
+}
+
+.offer-text-title{
+    
+    font-size: 20px;
+    color: #601407 !important;
+    font-family: 'Vollkorn', serif !important;
+    /* background-color:rgba(131, 183, 153, 0.55) !important */
+}
+
+.product-posted-image{
+    /* border: 2px solid white !important; */
+    margin-top: 1px;
+    margin-bottom: 2px;
+    border-radius: 0px !important;
+    border-radius: 5px !important;
    } 
 
+
+  .products-posted-card {
+     
+    border: 5px solid rgb(188, 226, 235) !important; 
+    margin-top: 1px !important;
+    margin-bottom: 1px !important;
+    border-radius: 0px !important;
+    background-color:rgba(131, 183, 153, 0.55) !important;
+   
+   }  
+   
+
 .card{
-    height: 30em;
-    width:  16em;
-    background-color: rgba(127, 162, 0, 0.858) !important;
+    /* background-color:rgba(131, 183, 153, 0.55) !important;
+    border: 3px solid  rgb(253, 231, 105) !important;  */
+    margin-left: 10px;
+    margin-right: 10px !important;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-family: 'Forum', cursive !important;
+    color: #1A3c34;
+    padding: 3px;
+    border: 1px white !important;
+    border-radius: 10px !important;
 }
+
+.request-button{
+    background-color: rgba(237, 171, 231, 0.413) !important;
+    color: #1A3c34 !important;
+    border: rgba(237, 171, 231, 0.16) !important;
+    margin-top: 10px ;
+}
+
+.product-requested-title{
+    margin-top: 20px; 
+    margin-left: 30px; 
+    font-size: 25px;
+    color: #601407 !important;
+    font-family: 'Vollkorn', serif !important;
+
+}
+
+.card mb-3{
+    margin-bottom: 40px ;
+    
+
+}
+
+.col-md-4{
+    border: 5px solid rgb(188, 226, 235) !important;
+    margin-left: 15px; 
+}
+
+.request-picture{
+    margin-left: 10px; 
+}
+
+.card-body{
+    background-color: rgba(131, 183, 153, 0.55) !important;
+    
+}
+
+.cardtext-data{
+    margin-bottom: 0px ;
+
+}
+
+.cardtext {
+    margin-bottom: 0px ; 
+}
+
+.cardtext-chat {
+    margin-left: 15px;   
+    margin-bottom: 0px ; 
+}
+
+.chat-form{
+    margin-top: 10px;
+    margin-right: 40px;
+    margin-left: 15px;  
+}
+
+.cardtext-complete {
+    margin-top: 5px;
+    margin-left: 520px;
+}
+
+.cardtext-trash {
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-bottom: 0px;
+}
+
+.conversation-div{
+ margin-right: 40px;
+ margin-left: 15px;
+ border-radius: 5px;
+ overflow: scroll;
+ max-height: 100px;
+ min-height: 100px;
+ background-color: white;
+ margin-top: 5px;
+}
+
+.textarea-chat{
+    margin-left: 15px;
+}
+
+.form-addproduct{
+    display: flex;
+    align-items: center; 
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    font-family: 'Vollkorn', serif !important;
+    color:  #1A3c34 !important;
+    background-color: #83B799;
+    padding: 15px;
+    border: 5px solid rgb(188, 226, 235) !important;
+
+    
+}
+
+.add-product-title{
+    color: #601407 !important;
+    font-family: 'Vollkorn', serif !important;
+    
+    
+}
+
+.people-fridge{
+    margin-left: 20px;
+    
+}
+
+.comment{
+    color: #601407 !important;
+    font-family: 'Vollkorn', serif !important;
+}
+
+/* color:  #1A3c34 !important; */

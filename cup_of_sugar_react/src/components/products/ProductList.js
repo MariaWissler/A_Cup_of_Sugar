@@ -3,6 +3,7 @@ import axios from "../../utils/axiosInstance";
 import ProductCard from "./ProductCard";
 import "./products.css";
 import { getUser } from "../../utils/auth";
+ 
 
 export default class ProductList extends Component {
   state = {
@@ -24,11 +25,11 @@ export default class ProductList extends Component {
   }
 
   requestProduct = productId => {
-    const { id } = getUser();
+    const { _id } = getUser();
     
     axios
       .post(`/api/products/${productId}/requests`, {
-        userId: id
+        userId: _id
       })
       .then(() => {
         alert("request addedd");
@@ -44,6 +45,7 @@ export default class ProductList extends Component {
 
   render() {
     const { error, products } = this.state;
+    
     return (
       <div className="products">
         {error ? (
@@ -51,6 +53,7 @@ export default class ProductList extends Component {
         ) : (
           products.map(product => (
             <ProductCard
+              className="product"
               key={product._id}
               handleRequestProduct={this.requestProduct}
               product={product}

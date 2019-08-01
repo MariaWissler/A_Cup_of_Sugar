@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "../../utils/axiosInstance";
 import ProductRequestedCard from "./ProductRequestedCards";
+
 import "./products.css";
 import { getUser } from "../../utils/auth";
 
@@ -31,6 +32,8 @@ export default class ProductsRequested extends Component {
     return (
       <div className="products-requested">
         
+        <h4 className="product-requested-title"><i class="fas fa-users"></i>
+        <span> </span>Requested Items</h4>
         {error ? (
           <h1>{error}</h1>
         ) : (
@@ -42,6 +45,8 @@ export default class ProductsRequested extends Component {
             />
          ))
         )}
+           
+            
       </div>
     );
   }

@@ -1,21 +1,24 @@
 .carousel-caption {
  text-align: center;
  width: 100%;
- background-color: white;
- opacity: 0.7;
+ background-color: rgba(255, 255, 255, 0.502);
  position: absolute;
- color: black;
  left: 0 !important;
+ border: 1px solid white;
+ 
+}
 
-
-  }
 .h3-responsive{
-  color: black ;
+  color:#601407 ;
   font-size: 6.5em;
-  font-family: 'Permanent Marker', cursive;
+  font-family: 'Vollkorn', serif ;
+  margin-bottom: 0px !important;
+  
 }
 
 .text{
-  color:black !important;
+  margin-bottom: 0px !important;
+  color: #1A3c34 !important;
   font-size: 2.3em;
+  
 }

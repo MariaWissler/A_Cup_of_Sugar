@@ -1,0 +1,47 @@
+.userProfile{
+    display: flex !important;
+    height: 20vh !important;
+    flex-wrap: wrap;
+    
+   
+}
+
+.user-card{
+     margin-left: 40px;
+     border-radius: 0px !important;
+}
+
+.profile-picture{
+    padding: 15px;
+}
+
+.title{
+    font-size: 20px;
+    color: #601407 !important;
+}
+
+.user-data{
+    margin-bottom: 0px;
+    padding: 0px ;
+    color:#1A3c34 !important;
+    font-family: 'Vollkorn', serif !important;
+    
+    
+}
+
+.people{
+    padding: 20px;
+    margin-left: 40px !important;
+    
+    
+}
+
+.user{
+    display: flex;
+    padding: 5px;
+    background-color: rgba(131, 183, 153, 0.358);
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+   
+}
